@@ -1,0 +1,43 @@
+fileFormatVersion: 2
+guid: 7845735251de44368a7bfbd7132f9e69
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Quarca
+  fontNames:
+  - Quarca
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 46ed3ac052ce448fe86576867bb1cca4, type: 3}
+  - {fileID: 12800000, guid: d288836130cd14f848055a6a1fa3677e, type: 3}
+  - {fileID: 12800000, guid: 247a65718a1204b57b481cd9ab7f007a, type: 3}
+  - {fileID: 12800000, guid: 16f08671ad0a14361860e410bd532212, type: 3}
+  - {fileID: 12800000, guid: b5af4db14c8404ef69258c0a0d4252ac, type: 3}
+  - {fileID: 12800000, guid: 755bd703e7f754598839e9ccdd55486d, type: 3}
+  - {fileID: 12800000, guid: 76752f8437c5e42718e42bb1741cab39, type: 3}
+  - {fileID: 12800000, guid: 54f96c94bc4874c2ab0464625f717729, type: 3}
+  - {fileID: 12800000, guid: 15496f653d9da4679bff5e56f64abd74, type: 3}
+  - {fileID: 12800000, guid: 8336ffb5183bd42409bc5407be0f192f, type: 3}
+  - {fileID: 12800000, guid: 90894ad5978ac4f7fba919855738fd23, type: 3}
+  - {fileID: 12800000, guid: 40a95d075db0c4ef6b4a631ced00b72e, type: 3}
+  - {fileID: 12800000, guid: e122b6185424b4251a2a4758d86f4452, type: 3}
+  - {fileID: 12800000, guid: e4727b1849c414a4794e8bb03938007e, type: 3}
+  - {fileID: 12800000, guid: 84e6c4386964b40b3a1c90473504beea, type: 3}
+  - {fileID: 12800000, guid: 5092ceb9c58ff48a0b50b47709635c75, type: 3}
+  - {fileID: 12800000, guid: e19cceda245f24571902c815b845a00e, type: 3}
+  - {fileID: 12800000, guid: 176a311b6164a495f97a929a32f34250, type: 3}
+  - {fileID: 12800000, guid: b68265bd9dcd04fbca6356f494a0c797, type: 3}
+  - {fileID: 12800000, guid: 57a6861e07b4e418ca5011169a469f28, type: 3}
+  - {fileID: 12800000, guid: 11bbbcfef482b40c69d650442c66738b, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
