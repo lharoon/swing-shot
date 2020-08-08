@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -12,13 +13,20 @@ public static class ObjUtils
     /// <param name="objs"></param>
     /// <param name="pos"></param>
     /// <returns></returns>
-    public static GameObject GetNearestObject(GameObject[] objs, Vector3 pos)
+    public static GameObject GetNearestObject(GameObject[] objs, Vector3 pos,
+        List<GameObject> excludes = null)
     {
         GameObject nearestObj = null;
         var minDistance = Mathf.Infinity;
 
         foreach (GameObject obj in objs)
         {
+            if (excludes != null)
+            {
+                if (excludes.Contains(obj))
+                    continue;
+            }
+
             var distance = Vector3.Distance(obj.transform.position, pos);
 
             if (distance < minDistance)

@@ -12,27 +12,27 @@ public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI titleText, instructionalText; // Title screen UI
     public GameObject mainCamera;
-
     public Transform guidePrefab, guideContainer;
+    public Transform initialDoorTransform;
+    public DoorBehaviour initialDoorBehaviour;
 
-    public GameObject level;
+    public GameObject fire;
 
     private Transform playerTransform;
+    private LevelManager lm;
 
     // Fields for spawning guides on start
     // TODO: Destroy guides in separate script (when distance is > x)
     private float guideSpawnTrigger;
     private const float spawnIncrement = 10f;
 
-    public Transform initialDoorTransform;
-    public DoorBehaviour initialDoorBehaviour;
-
-    public GameObject fire;
+    public bool isDebug = false;
 
     private void Start()
     {
         playerTransform = GameObject.FindWithTag("Player").transform;
         guideSpawnTrigger = playerTransform.position.x + spawnIncrement;
+        lm = FindObjectOfType<LevelManager>();
 
         StartCoroutine(GameLoop());
     }
@@ -40,13 +40,15 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // Debug
-        if (Input.GetKeyDown(GameControls.restartKey))
+        if (Input.GetKeyDown(GameControls.restartKey)
+            || Input.GetMouseButtonDown(1))
             SceneManager.LoadScene(0);
     }
 
     private IEnumerator GameLoop()
     {
-        yield return StartCoroutine(GameStarting());
+        if (!isDebug)
+            yield return StartCoroutine(GameStarting());
         yield return StartCoroutine(GamePlaying());
         yield return StartCoroutine(GameEnding());
     }
@@ -55,7 +57,7 @@ public class GameManager : MonoBehaviour
     {
         print("Game starting");
 
-        while (!Input.GetKeyDown(GameControls.fireKey))
+        while (!Input.GetKeyDown(GameControls.fireKey) && !Input.GetMouseButtonDown(0))
         {
             if (playerTransform.position.x > guideSpawnTrigger)
                 SpawnNewGuideOnStart();
@@ -79,16 +81,15 @@ public class GameManager : MonoBehaviour
 
         TransitionToMainCam();
 
-        level.SetActive(true);
+        lm.enabled = true;
         ActivateFire();
 
-        // TEMP
         initialDoorTransform.parent = null;
 
         var roundedXPos = (int)initialDoorTransform.position.x;
         if (roundedXPos % 2 != 0) roundedXPos++;
-        initialDoorTransform.position = new Vector2(roundedXPos, 0);
-
+        var doorPos = new Vector2(roundedXPos, 0);
+        initialDoorTransform.position = doorPos;
         initialDoorBehaviour.enabled = true;
 
         while (playerTransform != null)
@@ -99,7 +100,7 @@ public class GameManager : MonoBehaviour
     {
         fire.transform.parent = null;
         fire.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        fire.GetComponent<FireController>().enabled = true;
+        fire.GetComponentInChildren<FireMovement>().enabled = true;
     }
 
     private void TransitionToMainCam()

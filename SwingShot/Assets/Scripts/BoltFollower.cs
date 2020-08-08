@@ -1,27 +1,24 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Allows LightningBolt2D component to track transform
+/// Allows LightningBolt2D component to move with a physics object
 /// </summary>
 [RequireComponent(typeof(LightningBolt2D))]
 public class BoltFollower : MonoBehaviour
 {
-    public Transform targetTransform;
+    public Transform fp1, fp2;
 
-    private Vector3 offset;
     private LightningBolt2D bolt2D;
 
     private void Start()
     {
-        offset = transform.position - targetTransform.position;
         bolt2D = GetComponent<LightningBolt2D>();
     }
 
     private void Update()
     {
-        var newPos = targetTransform.position + offset;
-        bolt2D.startPoint = new Vector2(newPos.x, bolt2D.startPoint.y);
-        bolt2D.endPoint = new Vector2(newPos.x, bolt2D.endPoint.y);
+        bolt2D.startPoint = fp1.position;
+        bolt2D.endPoint = fp2.position;
         bolt2D.Generate();
-   } 
+    }
 }

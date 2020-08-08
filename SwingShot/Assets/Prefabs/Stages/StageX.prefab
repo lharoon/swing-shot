@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8314375962766277152
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8314375962766277154}
+  - component: {fileID: 8314375962766277153}
+  m_Layer: 0
+  m_Name: StageX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8314375962766277154
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8314375962766277152}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8314375962766277153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8314375962766277152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b121ce16a7f7c4d44af5830e6e253cb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doorAngles: 01000000
+  spacing: 6
+  number: 4
+  direction: 0
+  border10Prefab: {fileID: 3975789819047953127, guid: fa01aa229416945b7b7bab46cee2c05e,
+    type: 3}
+  border6Prefab: {fileID: 4411557634110427794, guid: 730f39b0ffb7147e2a6bd81f395b2992,
+    type: 3}
+  cornerBorder: {fileID: 925955066180692171, guid: acd1abf18c419481a89c76cead701eab,
+    type: 3}
+  cornerDoor: {fileID: 3617579326397268693, guid: 42fb6af9163934eabae76033ea3c4ba0,
+    type: 3}
+  cornerBorder2: {fileID: 925955066180692171, guid: ac3f95d3947c74b6099895d411ea6a23,
+    type: 3}
+  firePivotPrefab: {fileID: 6188198501207977133, guid: 3aa082c83d0d54f708c43c989618dc01,
+    type: 3}

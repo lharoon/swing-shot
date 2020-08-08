@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Updates transform of object that camera is following
@@ -10,48 +11,66 @@ public class CamTargetPositioner : MonoBehaviour
     // Player's distance from camera
     private Vector3 offset;
 
-    // True when player is over stage transition
-    private bool isAtEnd = false;
+    private bool isVertical = false;
 
-    private float yMax = 0, yMin = -6; // TODO: Update…
-    private readonly float yTranslateBy = 6;
+    private GameObject lastDoorInStage;
+    List<GameObject> lastDoors = new List<GameObject>();
+    private Vector2 startOfStage = Vector2.zero, endOfStage;
 
     private void Start()
     {
         offset = camTargetTransform.position - transform.position;
     }
 
+    private void Update()
+    {
+        if (lastDoorInStage == null)
+        {
+            var endObjs = GameObject.FindGameObjectsWithTag("end");
+            var lastDoorInStage = ObjUtils.GetNearestObject(endObjs,
+                transform.position, lastDoors);
+            if (lastDoorInStage != null)
+            {
+                endOfStage = lastDoorInStage.transform.position;
+                lastDoors.Add(lastDoorInStage);
+                //print("startOfStage: " + startOfStage); print("endOfStage: " + endOfStage);
+            }
+        }
+    }
+
     private void FixedUpdate()
     {
-        if (!isAtEnd)
+        var newPos = transform.position + offset;
+        if (!isVertical)
         {
-            var xPos = transform.position.x + offset.x;
-            camTargetTransform.position = new Vector3(xPos, camTargetTransform.position.y);
+            if (endOfStage.x > startOfStage.x)
+                newPos.x = Mathf.Clamp(newPos.x, startOfStage.x, endOfStage.x);
+            else
+                newPos.x = Mathf.Clamp(newPos.x, endOfStage.x, startOfStage.x);
+            newPos.y = startOfStage.y;
         }
         else
         {
-            var newPos = transform.position + offset;
-            // Clamp target y pos
-            float yPos = Mathf.Clamp(newPos.y, yMin, yMax);
-            newPos = new Vector2(newPos.x, yPos);
-
-            camTargetTransform.position = newPos;
+            newPos.x = startOfStage.x;
+            if (endOfStage.y > startOfStage.y)
+                newPos.y = Mathf.Clamp(newPos.y, startOfStage.y, endOfStage.y);
+            else
+                newPos.y = Mathf.Clamp(newPos.y, endOfStage.y, startOfStage.y);
         }
+        camTargetTransform.position = newPos;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("goal"))
-            isAtEnd = collision.transform.parent.CompareTag("end");
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("goal"))
         {
-            if (collision.transform.parent.CompareTag("start"))
+            var isAtEnd = collision.transform.parent.CompareTag("end");
+
+            if (isAtEnd)
             {
-                yMax -= yTranslateBy; yMin -= yTranslateBy;
+                startOfStage = endOfStage;
+                lastDoorInStage = null;
+                isVertical = !isVertical; // TODO: Rely on direction property instead
             }
         }
     }

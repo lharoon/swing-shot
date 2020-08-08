@@ -14,6 +14,10 @@ TagManager:
   - guide
   - end
   - start
+  - gate
+  - penultimate
+  - fire
+  - fire-pivot
   layers:
   - Default
   - TransparentFX

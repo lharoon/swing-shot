@@ -14,6 +14,13 @@ public class DoorBehaviour : MonoBehaviour
     private Vector3 originalDoorPos;
     private bool isActivated = false;
 
+    private void Awake()
+    {
+        // Make target if is first one
+        //if (FindObjectsOfType<DoorBehaviour>().Length == 1)
+        //    tag = "target";
+    }
+
     private void Start()
     {
         if (doorTransform != null)

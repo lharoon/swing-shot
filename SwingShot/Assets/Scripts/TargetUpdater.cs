@@ -13,11 +13,11 @@ public class TargetUpdater : MonoBehaviour
         if (lm == null)
             lm = FindObjectOfType<LevelManager>();
 
-        if (hasEnteredDoor && Input.GetKeyUp(KeyCode.Space))
+        if (hasEnteredDoor && (Input.GetKeyUp(GameControls.fireKey) || Input.GetMouseButtonUp(0)))
         {
             //print("Updating target");
             lm.UpdateTarget();
-            hasEnteredDoor = false; 
+            hasEnteredDoor = false;
         }
     }
 

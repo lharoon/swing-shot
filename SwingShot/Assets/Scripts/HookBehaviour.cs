@@ -19,11 +19,11 @@ public class HookBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(GameControls.fireKey))
+        if (Input.GetKeyDown(GameControls.fireKey) || Input.GetMouseButtonDown(0))
         {
             hookCollider.enabled = true;
         }
-        else if (Input.GetKeyUp(GameControls.fireKey))
+        else if (Input.GetKeyUp(GameControls.fireKey) || Input.GetMouseButtonUp(0))
         {
             if (anchor != null)
                 Unhook();

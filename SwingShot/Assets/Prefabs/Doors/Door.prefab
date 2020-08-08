@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 4104642264450728484}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: -1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5747787404288145937}
   - {fileID: 3567078970932385489}
@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 5235813884209155478}
   - component: {fileID: 7893846327983760499}
   - component: {fileID: 5125182494519583490}
+  - component: {fileID: 3321084886104746467}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -272,49 +273,49 @@ MonoBehaviour:
   points:
   - position: {x: -0.25, y: 0}
     curve: 0
-    name: point496502_0
+    name: point287334_0
     selected: 0
     clockwise: 1
     median: {x: -0.70710677, y: 0.70710677}
     handleP: {x: -0.25, y: 0}
     handleN: {x: -0.25, y: 0}
-    controlID: 14503
+    controlID: 13348
     controlPID: 0
     controlNID: 0
     pointType: 0
   - position: {x: 0.25, y: 0}
     curve: 0
-    name: point496502_1
-    selected: 0
+    name: point287334_2
+    selected: 1
     clockwise: 1
     median: {x: -0.70710677, y: -0.70710677}
     handleP: {x: 0.25, y: 0}
     handleN: {x: 0.25, y: 0}
-    controlID: 14504
+    controlID: 13349
     controlPID: 0
     controlNID: 0
     pointType: 0
   - position: {x: 0.25, y: -10}
     curve: 0
-    name: point496502_2
+    name: point287334_3
     selected: 0
     clockwise: 1
     median: {x: -0.70710677, y: 0.70710677}
     handleP: {x: 0.25, y: -10}
     handleN: {x: 0.25, y: -10}
-    controlID: 14505
+    controlID: 13350
     controlPID: 0
     controlNID: 0
     pointType: 0
   - position: {x: -0.25, y: -10}
     curve: 0
-    name: point496502_3
+    name: point287334_4
     selected: 0
     clockwise: 1
     median: {x: 0.70710677, y: 0.70710677}
     handleP: {x: -0.25, y: -10}
     handleN: {x: -0.25, y: -10}
-    controlID: 14506
+    controlID: 13351
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -331,19 +332,19 @@ MonoBehaviour:
     direction: 0
   - position: {x: 0.25, y: 0}
     wPosition: {x: 0.25, y: 0}
-    normal: {x: -1, y: -0}
-    signedAngle: 90
-    direction: 3
+    normal: {x: 1, y: -0}
+    signedAngle: -90
+    direction: 1
   - position: {x: 0.25, y: -10}
-    wPosition: {x: 0.25, y: 10}
+    wPosition: {x: 0.25, y: -10}
     normal: {x: 0, y: -1}
     signedAngle: 180
     direction: 2
   - position: {x: -0.25, y: -10}
-    wPosition: {x: -0.25, y: 10}
-    normal: {x: 1, y: -0}
-    signedAngle: -90
-    direction: 1
+    wPosition: {x: -0.25, y: -10}
+    normal: {x: -1, y: -0}
+    signedAngle: 90
+    direction: 3
   cpointsFinal:
   - {x: -0.25, y: 0}
   - {x: 0.25, y: 0}
@@ -423,6 +424,22 @@ PolygonCollider2D:
       - {x: 0.25, y: 0}
       - {x: 0.25, y: -10}
       - {x: -0.25, y: -10}
+--- !u!114 &3321084886104746467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4375115309840088747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f3636058f12a479599995529c2558ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 200
+  colour: {r: 0.13333334, g: 0.13725491, b: 0.13725491, a: 1}
+  outlineColour: {r: 0.9411765, g: 0.9647059, b: 0.9411765, a: 1}
+  shapeTransform: {fileID: 0}
 --- !u!1 &4475081142525192229
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,6 +453,7 @@ GameObject:
   - component: {fileID: 2174206162333007466}
   - component: {fileID: 5481330813096024057}
   - component: {fileID: 7720510173159573354}
+  - component: {fileID: 3901992572249547670}
   m_Layer: 0
   m_Name: Fixture
   m_TagString: Untagged
@@ -527,7 +545,7 @@ MonoBehaviour:
     median: {x: 0.70710677, y: -0.70710677}
     handleP: {x: -0.25, y: 7.625}
     handleN: {x: -0.25, y: 7.625}
-    controlID: 14503
+    controlID: 13348
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -539,7 +557,7 @@ MonoBehaviour:
     median: {x: -0.70710677, y: -0.70710677}
     handleP: {x: 0.25, y: 7.625}
     handleN: {x: 0.25, y: 7.625}
-    controlID: 14504
+    controlID: 13349
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -551,7 +569,7 @@ MonoBehaviour:
     median: {x: -0.9238795, y: -0.3826835}
     handleP: {x: 0.25, y: -2.125}
     handleN: {x: 0.25, y: -2.125}
-    controlID: 14505
+    controlID: 13350
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -563,7 +581,7 @@ MonoBehaviour:
     median: {x: -0.99999994, y: 0}
     handleP: {x: 0.5, y: -2.375}
     handleN: {x: 0.5, y: -2.375}
-    controlID: 14506
+    controlID: 13351
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -575,7 +593,7 @@ MonoBehaviour:
     median: {x: 0, y: 0.99999994}
     handleP: {x: 0, y: -2.875}
     handleN: {x: 0, y: -2.875}
-    controlID: 14507
+    controlID: 13352
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -587,7 +605,7 @@ MonoBehaviour:
     median: {x: 0.99999994, y: 0}
     handleP: {x: -0.5, y: -2.375}
     handleN: {x: -0.5, y: -2.375}
-    controlID: 14508
+    controlID: 13353
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -599,7 +617,7 @@ MonoBehaviour:
     median: {x: 0.92387956, y: -0.3826834}
     handleP: {x: -0.25, y: -2.125}
     handleN: {x: -0.25, y: -2.125}
-    controlID: 14509
+    controlID: 13354
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -613,40 +631,40 @@ MonoBehaviour:
   - {x: -0.25, y: -2.125, z: 0}
   cpoints:
   - position: {x: -0.25, y: 7.625}
-    wPosition: {x: -0.25, y: -10}
+    wPosition: {x: -0.25, y: 10}
     normal: {x: 0, y: 1}
     signedAngle: 0
     direction: 0
   - position: {x: 0.25, y: 7.625}
-    wPosition: {x: 0.25, y: -10}
-    normal: {x: -1, y: -0}
-    signedAngle: 90
-    direction: 3
-  - position: {x: 0.25, y: -2.125}
-    wPosition: {x: 0.25, y: -0.25}
-    normal: {x: -0.70710677, y: 0.70710677}
-    signedAngle: 45
-    direction: 0
-  - position: {x: 0.5, y: -2.375}
-    wPosition: {x: 0.5, y: 0}
-    normal: {x: -0.70710677, y: -0.70710677}
-    signedAngle: 135
-    direction: 2
-  - position: {x: 0, y: -2.875}
-    wPosition: {x: 0, y: 0.5}
-    normal: {x: 0.70710677, y: -0.70710677}
-    signedAngle: -135
-    direction: 2
-  - position: {x: -0.5, y: -2.375}
-    wPosition: {x: -0.5, y: 0}
-    normal: {x: 0.70710677, y: 0.70710677}
-    signedAngle: -45
-    direction: 0
-  - position: {x: -0.25, y: -2.125}
-    wPosition: {x: -0.25, y: -0.25}
+    wPosition: {x: 0.25, y: 10}
     normal: {x: 1, y: -0}
     signedAngle: -90
     direction: 1
+  - position: {x: 0.25, y: -2.125}
+    wPosition: {x: 0.25, y: 0.25}
+    normal: {x: 0.70710677, y: 0.70710677}
+    signedAngle: -45
+    direction: 0
+  - position: {x: 0.5, y: -2.375}
+    wPosition: {x: 0.5, y: 0}
+    normal: {x: 0.70710677, y: -0.70710677}
+    signedAngle: -135
+    direction: 2
+  - position: {x: 0, y: -2.875}
+    wPosition: {x: 0, y: -0.5}
+    normal: {x: -0.70710677, y: -0.70710677}
+    signedAngle: 135
+    direction: 2
+  - position: {x: -0.5, y: -2.375}
+    wPosition: {x: -0.5, y: 0}
+    normal: {x: -0.70710677, y: 0.70710677}
+    signedAngle: 45
+    direction: 0
+  - position: {x: -0.25, y: -2.125}
+    wPosition: {x: -0.25, y: 0.25}
+    normal: {x: -1, y: -0}
+    signedAngle: 90
+    direction: 3
   cpointsFinal:
   - {x: -0.25, y: 7.625}
   - {x: 0.25, y: 7.625}
@@ -732,6 +750,22 @@ PolygonCollider2D:
       - {x: 0, y: -2.875}
       - {x: -0.5, y: -2.375}
       - {x: -0.25, y: -2.125}
+--- !u!114 &3901992572249547670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4475081142525192229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f3636058f12a479599995529c2558ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderInLayer: 201
+  colour: {r: 0.13333334, g: 0.13725491, b: 0.13725491, a: 1}
+  outlineColour: {r: 0.9411765, g: 0.9647059, b: 0.9411765, a: 1}
+  shapeTransform: {fileID: 0}
 --- !u!1 &4649780414325690339
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,23 +38,23 @@ public class TurretController : MonoBehaviour
             //print("Distance: " + d);
         }
 
-        if (!Input.GetKey(GameControls.fireKey))
+        if (!Input.GetKey(GameControls.fireKey) && !Input.GetMouseButton(0))
         {
             var target = GetClosestTarget();
             if (target != null) targetTransform = target.transform;
             else targetTransform = null;
         }
 
-        if (Input.GetKeyDown(GameControls.fireKey) && targetTransform != null)
+        if ((Input.GetKeyDown(GameControls.fireKey) || Input.GetMouseButtonDown(0)) && targetTransform != null)
         {
             //bolt2D.FireOnce();
             ShootLaser();
         }
-        else if (Input.GetKeyUp(GameControls.fireKey) && laserEndPoint != null
+        else if ((Input.GetKeyUp(GameControls.fireKey) || Input.GetMouseButtonUp(0)) && laserEndPoint != null
             || targetTransform == null)
             KillLaser();
 
-        if ((Input.GetKey(GameControls.fireKey) || isDebug) && targetTransform != null)
+        if ((Input.GetKey(GameControls.fireKey) || Input.GetMouseButton(0) || isDebug) && targetTransform != null)
         {
             //&& laserEndPoint != null)
             DrawLaser();

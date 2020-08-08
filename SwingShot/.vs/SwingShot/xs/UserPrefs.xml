@@ -1,32 +1,15 @@
 ﻿<Properties StartupConfiguration="{D8FB89FE-B250-E378-A49E-0BB85B97E5F0}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Indicator.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Fire/FireMovement.cs">
     <Files>
-      <File FileName="Assets/Scripts/Indicator.cs" Line="25" Column="34" />
+      <File FileName="Assets/Scripts/Fire/FireMovement.cs" Line="100" Column="52" />
+      <File FileName="Assets/Scripts/Fire/FirePivotBehaviour.cs" />
+      <File FileName="Assets/Scripts/GameManager.cs" />
+      <File FileName="Assets/Scripts/StageManager.cs" Line="115" Column="79" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="SwingShot" expanded="True">
-            <Node name="Assets" expanded="True">
-              <Node name="Lightning Bolt 2D Effect" expanded="True">
-                <Node name="Scripts" expanded="True" />
-              </Node>
-              <Node name="ProtoShape2D" expanded="True">
-                <Node name="Scripts" expanded="True" />
-              </Node>
-              <Node name="Scripts" expanded="True">
-                <Node name="Utilities" expanded="True" />
-                <Node name="Indicator.cs" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="0ee22f28-9b70-4ccd-8d49-f81668bb8b03" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="41f2b3a3-f532-452e-978d-0d4d55c36e81" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

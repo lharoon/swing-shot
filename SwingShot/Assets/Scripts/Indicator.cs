@@ -15,7 +15,7 @@ public class Indicator : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name == "Turret" && Input.GetKey(KeyCode.Space))
+        if (collision.name == "Turret" && (Input.GetKey(GameControls.fireKey) || Input.GetMouseButton(0)))
             FadeShapes(0, 0.15f);
     }
 

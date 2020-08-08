@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
             rb2d.velocity = initialDirection * speed;
     }
 
+    private bool alt;
+
     private void FixedUpdate()
     {
         if (isDebug)
@@ -32,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            //if (Input.GetMouseButton(1))
+            //    rb2d.velocity = rb2d.velocity.normalized * speed * 1.5f;
+            //else
             // Move at linear velocity
             rb2d.velocity = rb2d.velocity.normalized * speed;
 
