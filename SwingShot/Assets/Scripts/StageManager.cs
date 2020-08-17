@@ -17,6 +17,7 @@ public class StageManager : MonoBehaviour
     public Transform border10Prefab, border8Prefab, border6Prefab;
     public Transform cornerBorder, cornerDoor, cornerBorder2;
     public FirePivotInfo firePivotPrefab;
+    public Transform coinPrefab;
 
     private LevelManager lm;
     private Quaternion minusFortyFive, zero, fortyFive, ninety, minusNinety;
@@ -62,12 +63,12 @@ public class StageManager : MonoBehaviour
         else
             print("Unaccounted for scenario!");
 
-
         for (int j = 0; j < numDoors; j++)
         {
             // Skip very first door
             if (lm.StageCount == 0 && j == 0)
             {
+                SpawnCoin();
                 UpdateSpawnPos(spacing);
                 continue;
             }
@@ -93,6 +94,11 @@ public class StageManager : MonoBehaviour
             // Instantiate random door
             var selectedDoorIdx = Random.Range(0, lm.doorPrefabsForStage.Count);
             SpawnDoor(lm.doorPrefabsForStage[selectedDoorIdx], rotation, isLast);
+
+            // Instantiate coin
+            if (lm.StageCount != 0 && j == 0)
+                SpawnCoin(true);
+            SpawnCoin();
 
             // Instantiate border with every door except last
             if (!isLast)
@@ -145,6 +151,16 @@ public class StageManager : MonoBehaviour
                 transform.localRotation = minusNinety;
                 break;
         }
+    }
+
+    private void SpawnCoin(bool isFirst = false)
+    {
+        var coinSpawnPos = doorSpawnPos;
+        if (isFirst)
+            coinSpawnPos.x -= spacing / 2;
+        else
+            coinSpawnPos.x += spacing / 2;
+        Instantiate(coinPrefab, coinSpawnPos, Quaternion.identity).parent = transform;
     }
 
     private void SpawnFirePivot(Vector2 offset, Direction newDir)

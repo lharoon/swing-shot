@@ -47,6 +47,7 @@ MonoBehaviour:
   spacing: 6
   number: 4
   direction: 0
+  nextDirection: 0
   border10Prefab: {fileID: 3975789819047953127, guid: fa01aa229416945b7b7bab46cee2c05e,
     type: 3}
   border8Prefab: {fileID: 9024436129266201873, guid: 80f0bab337f1d470e9f49f9999eeb27c,
@@ -61,4 +62,5 @@ MonoBehaviour:
     type: 3}
   firePivotPrefab: {fileID: 6188198501207977133, guid: 3aa082c83d0d54f708c43c989618dc01,
     type: 3}
-  nextDirection: 0
+  coinPrefab: {fileID: 8782983079225254536, guid: 033bc288a549b43c7b40d70c394902af,
+    type: 3}

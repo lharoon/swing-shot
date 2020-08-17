@@ -1,31 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TurretController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/StageManager.cs">
     <Files>
       <File FileName="Assets/Scripts/LevelManager.cs" Line="14" Column="40" IsPinned="True" />
-      <File FileName="Assets/Scripts/StageManager.cs" Line="109" Column="64" IsPinned="True" />
-      <File FileName="Assets/Scripts/CamTargetPositioner.cs" Line="36" Column="94" />
-      <File FileName="Assets/Scripts/OverlayAdder.cs" Line="3" Column="1" />
-      <File FileName="Assets/Scripts/SpriteColourSwapper.cs" Line="46" Column="8" />
-      <File FileName="Assets/Scripts/TrailBehaviour.cs" Line="10" Column="5" />
-      <File FileName="Assets/Scripts/FireInfo.cs" Line="16" Column="34" />
-      <File FileName="Assets/Scripts/GameManager.cs" Line="127" Column="10" />
-      <File FileName="Assets/Scripts/TurretController.cs" Line="14" Column="16" />
+      <File FileName="Assets/Scripts/StageManager.cs" Line="21" Column="10" IsPinned="True" />
+      <File FileName="Assets/Scripts/CamTargetPositioner.cs" />
+      <File FileName="Assets/Scripts/OverlayAdder.cs" />
+      <File FileName="Assets/Scripts/SpriteColourSwapper.cs" />
+      <File FileName="Assets/Scripts/TrailBehaviour.cs" />
+      <File FileName="Assets/Scripts/FireInfo.cs" />
+      <File FileName="Assets/Scripts/GameManager.cs" />
+      <File FileName="Assets/Scripts/TurretController.cs" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="SwingShot" expanded="True">
-            <Node name="Assembly-CSharp" expanded="True">
-              <Node name="Assets" expanded="True">
-                <Node name="Scripts" expanded="True">
-                  <Node name="TurretController.cs" selected="True" />
-                </Node>
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
