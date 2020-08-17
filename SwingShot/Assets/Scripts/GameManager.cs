@@ -112,12 +112,23 @@ public class GameManager : MonoBehaviour
         instructionalText.DOFade(0, 0.05f);
 
         foreach (var guide in GameObject.FindGameObjectsWithTag("guide"))
-            guide.GetComponent<SpriteFader>().enabled = true;
+            guide.GetComponentInChildren<SpriteFader>().enabled = true;
     }
 
     private IEnumerator GameEnding()
     {
         print("Game ending");
+
+        var fireInfo = fire.GetComponentInChildren<FireInfo>();
+
+        if (!fireInfo.IsOverPlayer)
+        {
+            // TODO
+        }
+        else
+        {
+            // TODO
+        }
 
         throw new NotImplementedException();
     }

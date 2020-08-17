@@ -5,19 +5,31 @@
 /// </summary>
 public class PlayerDeath : MonoBehaviour
 {
-    public FlatFX explosion;
+    public FlatFX explosionWhite, explosionBlack;
     public Transform trailTransform;
+
+    private FireInfo fire;
+    private bool isDestroyed;
+
+    private void Start()
+    {
+        fire = FindObjectOfType<FireInfo>();
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.gameObject.CompareTag("laser"))
+        if (!collision.gameObject.CompareTag("laser") && !isDestroyed)
             KillPlayer();
     }
 
     private void KillPlayer()
     {
-        explosion.AddEffect(transform.position, 2);
+        if (!fire.IsOverPlayer)
+            explosionWhite.AddEffect(transform.position, 2);
+        else
+            explosionBlack.AddEffect(transform.position, 2);
         trailTransform.parent = null;
         Destroy(gameObject);
+        isDestroyed = true;
     }
 }

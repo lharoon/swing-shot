@@ -40,22 +40,35 @@ public class CamTargetPositioner : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var newPos = transform.position + offset;
+        //var newPos = transform.position + offset;
+        Vector3 newPos;
         if (!isVertical)
         {
             if (endOfStage.x > startOfStage.x)
+            {
+                newPos = transform.position + offset;
                 newPos.x = Mathf.Clamp(newPos.x, startOfStage.x, endOfStage.x);
-            else
+            }
+            else // Should never come here
+            {
+                newPos = transform.position - offset;
                 newPos.x = Mathf.Clamp(newPos.x, endOfStage.x, startOfStage.x);
+            }
             newPos.y = startOfStage.y;
         }
         else
         {
-            newPos.x = startOfStage.x;
             if (endOfStage.y > startOfStage.y)
+            {
+                newPos = transform.position - offset;
                 newPos.y = Mathf.Clamp(newPos.y, startOfStage.y, endOfStage.y);
+            }
             else
+            {
+                newPos = transform.position + offset;
                 newPos.y = Mathf.Clamp(newPos.y, endOfStage.y, startOfStage.y);
+            }
+            newPos.x = startOfStage.x;
         }
         camTargetTransform.position = newPos;
     }

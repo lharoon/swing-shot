@@ -3,6 +3,7 @@
 public class StageGenerator : MonoBehaviour
 {
     private LevelManager lm;
+    private bool hasGeneratedStage;
 
     private void Start()
     {
@@ -11,7 +12,10 @@ public class StageGenerator : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.parent.CompareTag("end"))
-            lm.GenerateStage(collision.transform.position);
+        if (collision.CompareTag("Player") && !hasGeneratedStage)
+        {
+            lm.GenerateStage(transform.position);
+            hasGeneratedStage = true;
+        }
     }
 }

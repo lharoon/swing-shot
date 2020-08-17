@@ -204,7 +204,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4375115309840088747}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3617579326397268693}
@@ -233,6 +233,7 @@ MeshRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -257,6 +258,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7893846327983760499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,81 +278,100 @@ MonoBehaviour:
     name: point287334_0
     selected: 0
     clockwise: 1
-    median: {x: -0.70710677, y: 0.70710677}
+    median: {x: -0.3826834, y: 0.9238795}
     handleP: {x: -0.25, y: 0}
     handleN: {x: -0.25, y: 0}
-    controlID: 13348
+    controlID: 58822
+    controlPID: 0
+    controlNID: 0
+    pointType: 0
+  - position: {x: 0, y: -0.25}
+    curve: 0
+    name: point287334_1
+    selected: 1
+    clockwise: 1
+    median: {x: 0, y: -0.99999994}
+    handleP: {x: 0, y: -0.25}
+    handleN: {x: 0, y: -0.25}
+    controlID: 58823
     controlPID: 0
     controlNID: 0
     pointType: 0
   - position: {x: 0.25, y: 0}
     curve: 0
     name: point287334_2
-    selected: 1
+    selected: 0
     clockwise: 1
-    median: {x: -0.70710677, y: -0.70710677}
+    median: {x: -0.38268346, y: -0.9238795}
     handleP: {x: 0.25, y: 0}
     handleN: {x: 0.25, y: 0}
-    controlID: 13349
+    controlID: 58824
     controlPID: 0
     controlNID: 0
     pointType: 0
-  - position: {x: 0.25, y: -10}
+  - position: {x: 0.25, y: -9.75}
     curve: 0
     name: point287334_3
     selected: 0
     clockwise: 1
     median: {x: -0.70710677, y: 0.70710677}
-    handleP: {x: 0.25, y: -10}
-    handleN: {x: 0.25, y: -10}
-    controlID: 13350
+    handleP: {x: 0.25, y: -9.75}
+    handleN: {x: 0.25, y: -9.75}
+    controlID: 58825
     controlPID: 0
     controlNID: 0
     pointType: 0
-  - position: {x: -0.25, y: -10}
+  - position: {x: -0.25, y: -9.75}
     curve: 0
     name: point287334_4
     selected: 0
     clockwise: 1
     median: {x: 0.70710677, y: 0.70710677}
-    handleP: {x: -0.25, y: -10}
-    handleN: {x: -0.25, y: -10}
-    controlID: 13351
+    handleP: {x: -0.25, y: -9.75}
+    handleN: {x: -0.25, y: -9.75}
+    controlID: 58826
     controlPID: 0
     controlNID: 0
     pointType: 0
   pointsFinal:
   - {x: -0.25, y: 0, z: 0}
+  - {x: 0, y: -0.25, z: 0}
   - {x: 0.25, y: 0, z: 0}
-  - {x: 0.25, y: -10, z: 0}
-  - {x: -0.25, y: -10, z: 0}
+  - {x: 0.25, y: -9.75, z: 0}
+  - {x: -0.25, y: -9.75, z: 0}
   cpoints:
   - position: {x: -0.25, y: 0}
-    wPosition: {x: -0.25, y: 0}
-    normal: {x: 0, y: 1}
-    signedAngle: 0
+    wPosition: {x: -0.25, y: -0.25}
+    normal: {x: 0.70710677, y: 0.70710677}
+    signedAngle: -45
+    direction: 0
+  - position: {x: 0, y: -0.25}
+    wPosition: {x: 0, y: -0.5}
+    normal: {x: -0.70710677, y: 0.70710677}
+    signedAngle: 45
     direction: 0
   - position: {x: 0.25, y: 0}
-    wPosition: {x: 0.25, y: 0}
+    wPosition: {x: 0.25, y: -0.25}
     normal: {x: 1, y: -0}
     signedAngle: -90
     direction: 1
-  - position: {x: 0.25, y: -10}
+  - position: {x: 0.25, y: -9.75}
     wPosition: {x: 0.25, y: -10}
     normal: {x: 0, y: -1}
     signedAngle: 180
     direction: 2
-  - position: {x: -0.25, y: -10}
+  - position: {x: -0.25, y: -9.75}
     wPosition: {x: -0.25, y: -10}
     normal: {x: -1, y: -0}
     signedAngle: 90
     direction: 3
   cpointsFinal:
   - {x: -0.25, y: 0}
+  - {x: 0, y: -0.25}
   - {x: 0.25, y: 0}
-  - {x: 0.25, y: -10}
-  - {x: -0.25, y: -10}
-  triangleCount: 10
+  - {x: 0.25, y: -9.75}
+  - {x: -0.25, y: -9.75}
+  triangleCount: 13
   fillType: 0
   textureScale: 1
   textureRotation: 0
@@ -363,7 +384,7 @@ MonoBehaviour:
   outlineWidth: 0.1
   outlineColor: {r: 0.13333334, g: 0.13725491, b: 0.13725491, a: 1}
   outlineLoop: 1
-  outlineConnect: 4
+  outlineConnect: 5
   outlineUseCustomMaterial: 0
   outlineCustomMaterial: {fileID: 0}
   HDRColors: 0
@@ -387,7 +408,7 @@ MonoBehaviour:
   cMesh: {fileID: 0}
   cMeshDepth: 3
   clockwise: 1
-  minPoint: {x: -0.25, y: -10}
+  minPoint: {x: -0.25, y: -9.75}
   maxPoint: {x: 0.25, y: 0}
   showFillSettings: 1
   showOutlineSettings: 1
@@ -421,9 +442,10 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: -0.25, y: 0}
+      - {x: 0, y: -0.25}
       - {x: 0.25, y: 0}
-      - {x: 0.25, y: -10}
-      - {x: -0.25, y: -10}
+      - {x: 0.25, y: -9.75}
+      - {x: -0.25, y: -9.75}
 --- !u!114 &3321084886104746467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,7 +461,7 @@ MonoBehaviour:
   orderInLayer: 200
   colour: {r: 0.13333334, g: 0.13725491, b: 0.13725491, a: 1}
   outlineColour: {r: 0.9411765, g: 0.9647059, b: 0.9411765, a: 1}
-  shapeTransform: {fileID: 0}
+  shapeTransform: {fileID: 3567078970932385489}
 --- !u!1 &4475081142525192229
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,6 +521,7 @@ MeshRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -523,6 +546,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5481330813096024057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,7 +569,7 @@ MonoBehaviour:
     median: {x: 0.70710677, y: -0.70710677}
     handleP: {x: -0.25, y: 7.625}
     handleN: {x: -0.25, y: 7.625}
-    controlID: 13348
+    controlID: 14728
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -557,7 +581,7 @@ MonoBehaviour:
     median: {x: -0.70710677, y: -0.70710677}
     handleP: {x: 0.25, y: 7.625}
     handleN: {x: 0.25, y: 7.625}
-    controlID: 13349
+    controlID: 14801
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -569,7 +593,7 @@ MonoBehaviour:
     median: {x: -0.9238795, y: -0.3826835}
     handleP: {x: 0.25, y: -2.125}
     handleN: {x: 0.25, y: -2.125}
-    controlID: 13350
+    controlID: 14802
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -581,7 +605,7 @@ MonoBehaviour:
     median: {x: -0.99999994, y: 0}
     handleP: {x: 0.5, y: -2.375}
     handleN: {x: 0.5, y: -2.375}
-    controlID: 13351
+    controlID: 14803
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -593,7 +617,7 @@ MonoBehaviour:
     median: {x: 0, y: 0.99999994}
     handleP: {x: 0, y: -2.875}
     handleN: {x: 0, y: -2.875}
-    controlID: 13352
+    controlID: 14804
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -605,7 +629,7 @@ MonoBehaviour:
     median: {x: 0.99999994, y: 0}
     handleP: {x: -0.5, y: -2.375}
     handleN: {x: -0.5, y: -2.375}
-    controlID: 13353
+    controlID: 14805
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -617,7 +641,7 @@ MonoBehaviour:
     median: {x: 0.92387956, y: -0.3826834}
     handleP: {x: -0.25, y: -2.125}
     handleN: {x: -0.25, y: -2.125}
-    controlID: 13354
+    controlID: 14806
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -765,7 +789,7 @@ MonoBehaviour:
   orderInLayer: 201
   colour: {r: 0.13333334, g: 0.13725491, b: 0.13725491, a: 1}
   outlineColour: {r: 0.9411765, g: 0.9647059, b: 0.9411765, a: 1}
-  shapeTransform: {fileID: 0}
+  shapeTransform: {fileID: 5747787404288145937}
 --- !u!1 &4649780414325690339
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,6 +967,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -967,6 +992,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!58 &3866406338310701189
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1046,6 +1072,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

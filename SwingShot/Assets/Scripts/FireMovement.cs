@@ -8,6 +8,7 @@ public class FireMovement : MonoBehaviour
     public Rigidbody2D rb2d; // Rigidbody of parent (ie fire)
 
     private readonly float bottomSpeed = 7.0f; // Actual speed
+    //private readonly float bottomSpeed = 10.0f; // Actual speed
 
     private HingeJoint2D anchor; // Pivot
     private bool isHooked; // Whether or not fire is in contact with pivot

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 /// <summary>
 /// Directs turret at nearest target & fires laser when prompted
@@ -17,9 +18,15 @@ public class TurretController : MonoBehaviour
     private LightningBolt2D bolt2D;
     private MeshRenderer meshRenderer;
 
+    private FireInfo fire;
+    private bool isBlack;
+    private int laserOrderInLayer;
+
     private void Awake()
     {
         bolt2D = laser.GetComponent<LightningBolt2D>();
+        laserOrderInLayer = bolt2D.sortingLayer;
+        fire = FindObjectOfType<FireInfo>();
     }
 
     private void Start()
@@ -78,6 +85,22 @@ public class TurretController : MonoBehaviour
         //    print("Miss");
         //    bolt2D.lineColor = new Color(255, 54, 62);
         //}
+
+        // Switch laser colour when fire collides with player
+        if (fire.IsOverPlayer && !isBlack)
+        {
+            DOTween.To(() => bolt2D.lineColor, x => bolt2D.lineColor = x,
+                GameColours.black, 0.5f);
+            bolt2D.orderInLayer = laserOrderInLayer + GameColours.fireOrderInLayer;
+            isBlack = true;
+        }
+        else if (!fire.IsOverPlayer && isBlack)
+        {
+            DOTween.To(() => bolt2D.lineColor, x => bolt2D.lineColor = x,
+                GameColours.white, 0.25f);
+            bolt2D.orderInLayer = laserOrderInLayer;
+            isBlack = false;
+        }
     }
 
     #region Laser

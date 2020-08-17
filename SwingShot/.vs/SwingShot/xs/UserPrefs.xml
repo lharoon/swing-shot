@@ -1,15 +1,35 @@
-﻿<Properties StartupConfiguration="{D8FB89FE-B250-E378-A49E-0BB85B97E5F0}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Fire/FireMovement.cs">
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TurretController.cs">
     <Files>
-      <File FileName="Assets/Scripts/Fire/FireMovement.cs" Line="100" Column="52" />
-      <File FileName="Assets/Scripts/Fire/FirePivotBehaviour.cs" />
-      <File FileName="Assets/Scripts/GameManager.cs" />
-      <File FileName="Assets/Scripts/StageManager.cs" Line="115" Column="79" />
+      <File FileName="Assets/Scripts/LevelManager.cs" Line="14" Column="40" IsPinned="True" />
+      <File FileName="Assets/Scripts/StageManager.cs" Line="109" Column="64" IsPinned="True" />
+      <File FileName="Assets/Scripts/CamTargetPositioner.cs" Line="36" Column="94" />
+      <File FileName="Assets/Scripts/OverlayAdder.cs" Line="3" Column="1" />
+      <File FileName="Assets/Scripts/SpriteColourSwapper.cs" Line="46" Column="8" />
+      <File FileName="Assets/Scripts/TrailBehaviour.cs" Line="10" Column="5" />
+      <File FileName="Assets/Scripts/FireInfo.cs" Line="16" Column="34" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="127" Column="10" />
+      <File FileName="Assets/Scripts/TurretController.cs" Line="14" Column="16" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SwingShot" expanded="True">
+            <Node name="Assembly-CSharp" expanded="True">
+              <Node name="Assets" expanded="True">
+                <Node name="Scripts" expanded="True">
+                  <Node name="TurretController.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="41f2b3a3-f532-452e-978d-0d4d55c36e81" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ed7a0967-5600-4760-aeef-346bcdf9acb6" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

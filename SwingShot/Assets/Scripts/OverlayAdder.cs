@@ -2,29 +2,32 @@
 
 public class OverlayAdder : MonoBehaviour
 {
-    public int orderInLayer = 200;
     public Color colour, outlineColour;
     public Transform shapeTransform;
 
     private ProtoShape2D shape2D, overlayShape;
     private bool show;
     private float fadeInSpeed = 5f, fadeOutSpeed = 7f; // TODO: Speed up
+    private FireInfo fire;
 
     private void Start()
     {
         shape2D = shapeTransform.GetComponent<ProtoShape2D>();
         CreateOverlay();
+
+        fire = FindObjectOfType<FireInfo>();
     }
 
     private void Update()
     {
-        if (show && overlayShape.color1.a <= 1)
+        if (show && fire.IsOverPlayer && overlayShape.color1.a <= 1)
         {
             overlayShape.color1.a += fadeInSpeed * Time.deltaTime;
             overlayShape.outlineColor.a += fadeInSpeed * Time.deltaTime;
             overlayShape.UpdateMesh();
         }
-        else if (!show && overlayShape.color1.a >= 0)
+        //else if (!show && overlayShape.color1.a >= 0)
+        else if (!fire.IsOverPlayer && overlayShape.color1.a >= 0)
         {
             overlayShape.color1.a -= fadeOutSpeed * Time.deltaTime;
             overlayShape.outlineColor.a -= fadeOutSpeed * Time.deltaTime;
@@ -55,7 +58,7 @@ public class OverlayAdder : MonoBehaviour
         overlayShape.outlineColor = outlineColour;
         overlayShape.outlineColor.a = 0;
         overlayShape.outlineWidth = 0.1f;
-        overlayShape.orderInLayer = orderInLayer;
+        overlayShape.orderInLayer = shape2D.orderInLayer + GameColours.fireOrderInLayer;
         overlayShape.UpdateMesh();
     }
 
@@ -63,16 +66,20 @@ public class OverlayAdder : MonoBehaviour
     {
         if (collision.CompareTag("fire"))
         {
-            //print(name);
+            //if (collision.GetComponent<FireInfo>() != null)
+            //{
+            //    if (collision.GetComponent<FireInfo>().IsOverPlayer)
             show = true;
+            //}
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("fire"))
-        {
-            show = false;
-        }
-    }
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("fire"))
+    //    {
+    //        // TODO: When should I undo the effect?
+    //        show = false;
+    //    }
+    //}
 }

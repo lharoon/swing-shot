@@ -11,9 +11,10 @@ public class StageManager : MonoBehaviour
     public int spacing;
     public int number;
     public Direction direction;
+    public Direction nextDirection;
     #endregion
 
-    public Transform border10Prefab, border6Prefab;
+    public Transform border10Prefab, border8Prefab, border6Prefab;
     public Transform cornerBorder, cornerDoor, cornerBorder2;
     public FirePivotInfo firePivotPrefab;
 
@@ -31,85 +32,107 @@ public class StageManager : MonoBehaviour
         minusNinety = Quaternion.Euler(new Vector3(0, 0, -90f));
 
         lm = FindObjectOfType<LevelManager>();
+        transform.parent = lm.transform;
         doorSpawnPos = transform.position;
     }
 
     public void SpawnDoors()
     {
-        for (int i = 0; i < number; i++)
+        int numDoors = doorAngles.Count * number; // Num doors in stage minus corner door
+        int numDoorsInLevel = lm.doorsInLevel.Count + numDoors + 1; // Total num doors plus corner door
+
+        // Add door to stage so that polarity of corner door is correct if required
+        if (direction == Direction.Right && nextDirection == Direction.Up)
         {
-            for (int j = 0; j < doorAngles.Count; j++)
+            // Force last door to be non-inverted
+            if (lm.StageCount != 0) { if (numDoorsInLevel % 2 != 0) numDoors++; }
+            else numDoors++;
+        }
+        else if (direction == Direction.Up && nextDirection == Direction.Right)
+        {
+            // Force last door to be inverted
+            if (numDoorsInLevel % 2 == 0) numDoors++;
+        }
+        else if (direction == Direction.Right && nextDirection == Direction.Down)
+        {
+            // Force last door to be inverted
+            if (lm.StageCount != 0)
+                if (numDoorsInLevel % 2 == 0) numDoors++;
+        }
+        else
+            print("Unaccounted for scenario!");
+
+
+        for (int j = 0; j < numDoors; j++)
+        {
+            // Skip very first door
+            if (lm.StageCount == 0 && j == 0)
             {
-                // Skip very first door
-                if (lm.StageCount == 0 && i == 0 && j == 0)
+                UpdateSpawnPos(spacing);
+                continue;
+            }
+
+            // Get door rotation
+            Quaternion rotation;
+            switch (doorAngles[j % doorAngles.Count])
+            {
+                case DoorAngle.MinusFortyFive:
+                    rotation = minusFortyFive;
+                    break;
+                case DoorAngle.Zero:
+                    rotation = zero;
+                    break;
+                default:
+                    //case DoorAngles.FortyFive:
+                    rotation = fortyFive;
+                    break;
+            }
+
+            bool isLast = j == numDoors - 1;
+
+            // Instantiate random door
+            var selectedDoorIdx = Random.Range(0, lm.doorPrefabsForStage.Count);
+            SpawnDoor(lm.doorPrefabsForStage[selectedDoorIdx], rotation, isLast);
+
+            // Instantiate border with every door except last
+            if (!isLast)
+            {
+                switch (spacing)
                 {
-                    UpdateSpawnPos(spacing);
-                    continue;
+                    case 6:
+                        Instantiate(border6Prefab, doorSpawnPos,
+                            Quaternion.identity).parent = transform;
+                        break;
+                    case 8:
+                        Instantiate(border8Prefab, doorSpawnPos,
+                            Quaternion.identity).parent = transform;
+                        break;
+                    case 10:
+                        Instantiate(border10Prefab, doorSpawnPos,
+                            Quaternion.identity).parent = transform;
+                        break;
                 }
 
-                // Get door rotation
-                Quaternion rotation;
-                switch (doorAngles[j])
-                {
-                    case DoorAngle.MinusFortyFive:
-                        rotation = minusFortyFive;
-                        break;
-                    case DoorAngle.Zero:
-                        rotation = zero;
-                        break;
-                    default:
-                        //case DoorAngles.FortyFive:
-                        rotation = fortyFive;
-                        break;
-                }
-
-                bool isLast = i == number - 1 && j == doorAngles.Count - 1;
-
-                // Instantiate random door
-                var selectedDoorIdx = Random.Range(0, lm.doorPrefabsForStage.Count);
-                SpawnDoor(lm.doorPrefabsForStage[selectedDoorIdx], rotation, isLast);
-
-                // Instantiate border with every door except last
-                if (!isLast)
-                {
-                    switch (spacing)
-                    {
-                        case 6:
-                            Instantiate(border6Prefab, doorSpawnPos,
-                                Quaternion.identity).parent = transform;
-                            break;
-                        //case 8:
-                        //    Instantiate(border8Prefab, spawnPos,
-                        //        Quaternion.identity).parent = transform;
-                        //    break;
-                        case 10:
-                            Instantiate(border10Prefab, doorSpawnPos,
-                                Quaternion.identity).parent = transform;
-                            break;
-                    }
-
-                    UpdateSpawnPos(spacing);
-                }
+                UpdateSpawnPos(spacing);
             }
         }
 
         // Instantiate corner (border & door)
-        switch (direction)
+        if (nextDirection == Direction.Right && direction == Direction.Down ||
+            nextDirection == Direction.Up)
         {
-            case Direction.Right:
-                Instantiate(cornerBorder, doorSpawnPos, Quaternion.identity).parent = transform;
-                UpdateSpawnPos(lm.GapAtEnd);
-                SpawnDoor(cornerDoor, minusFortyFive);
-                SpawnFirePivot(new Vector2(-4, -4), Direction.Down); // TODO: Up?
-                break;
-            case Direction.Down:
-                Instantiate(cornerBorder2, doorSpawnPos, ninety).parent = transform;
-                UpdateSpawnPos(lm.GapAtEnd);
-                SpawnDoor(cornerDoor, fortyFive);
-                SpawnFirePivot(new Vector2(-4, 4), Direction.Right);
-                break;
-            case Direction.Up:
-                break;
+            Instantiate(cornerBorder2, doorSpawnPos, ninety).parent = transform;
+            UpdateSpawnPos(lm.GapAtEnd);
+            SpawnDoor(cornerDoor, fortyFive);
+            SpawnFirePivot(new Vector2(-4, 4), nextDirection);
+        }
+        else if (nextDirection == Direction.Right && direction == Direction.Up ||
+            nextDirection == Direction.Down)
+        {
+            Instantiate(cornerBorder, doorSpawnPos, Quaternion.identity).parent = transform;
+            UpdateSpawnPos(lm.GapAtEnd);
+            SpawnDoor(cornerDoor, minusFortyFive);
+            SpawnFirePivot(new Vector2(-4, -4), nextDirection);
         }
 
         // Set rotation

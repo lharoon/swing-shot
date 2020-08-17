@@ -71,6 +71,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6352553922114385146}
   - component: {fileID: 5434928961940439395}
+  - component: {fileID: 4713418125822437890}
+  - component: {fileID: 6085158404442190685}
   m_Layer: 0
   m_Name: Untagger
   m_TagString: goal
@@ -118,6 +120,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &4713418125822437890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3877637955833624174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd9fa35c30c954d6bb07b6f04a78de0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6085158404442190685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3877637955833624174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c26aa599016b4bc2a9d0055f33e3a70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4104642264450728484
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,6 +214,7 @@ GameObject:
   - component: {fileID: 5235813884209155478}
   - component: {fileID: 7893846327983760499}
   - component: {fileID: 5125182494519583490}
+  - component: {fileID: 895290301278050094}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -232,6 +259,7 @@ MeshRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -256,6 +284,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7893846327983760499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,7 +307,7 @@ MonoBehaviour:
     median: {x: -0.70710677, y: 0.70710677}
     handleP: {x: -0.25, y: 3}
     handleN: {x: -0.25, y: 3}
-    controlID: 99990
+    controlID: 1233
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -290,7 +319,7 @@ MonoBehaviour:
     median: {x: -0.70710677, y: -0.70710677}
     handleP: {x: 0.25, y: 3}
     handleN: {x: 0.25, y: 3}
-    controlID: 99991
+    controlID: 1234
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -302,7 +331,7 @@ MonoBehaviour:
     median: {x: -0.70710677, y: 0.70710677}
     handleP: {x: 0.25, y: -10}
     handleN: {x: 0.25, y: -10}
-    controlID: 99992
+    controlID: 1235
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -314,7 +343,7 @@ MonoBehaviour:
     median: {x: 0.70710677, y: 0.70710677}
     handleP: {x: -0.25, y: -10}
     handleN: {x: -0.25, y: -10}
-    controlID: 99993
+    controlID: 1236
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -423,6 +452,21 @@ PolygonCollider2D:
       - {x: 0.25, y: 3}
       - {x: 0.25, y: -10}
       - {x: -0.25, y: -10}
+--- !u!114 &895290301278050094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4375115309840088747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f3636058f12a479599995529c2558ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colour: {r: 0.13333334, g: 0.13725491, b: 0.13725491, a: 1}
+  outlineColour: {r: 0.9411765, g: 0.9647059, b: 0.9411765, a: 1}
+  shapeTransform: {fileID: 3567078970932385489}
 --- !u!1 &4475081142525192229
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,6 +480,7 @@ GameObject:
   - component: {fileID: 2174206162333007466}
   - component: {fileID: 5481330813096024057}
   - component: {fileID: 7720510173159573354}
+  - component: {fileID: 4230935767114116205}
   m_Layer: 0
   m_Name: Fixture
   m_TagString: Untagged
@@ -481,6 +526,7 @@ MeshRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -505,6 +551,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5481330813096024057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,7 +574,7 @@ MonoBehaviour:
     median: {x: 0.70710677, y: -0.70710677}
     handleP: {x: -0.25, y: 7.625}
     handleN: {x: -0.25, y: 7.625}
-    controlID: 99990
+    controlID: 1233
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -539,7 +586,7 @@ MonoBehaviour:
     median: {x: -0.70710677, y: -0.70710677}
     handleP: {x: 0.25, y: 7.625}
     handleN: {x: 0.25, y: 7.625}
-    controlID: 99991
+    controlID: 1234
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -551,7 +598,7 @@ MonoBehaviour:
     median: {x: -0.9238795, y: -0.3826835}
     handleP: {x: 0.25, y: 0.875}
     handleN: {x: 0.25, y: 0.875}
-    controlID: 99992
+    controlID: 1235
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -563,7 +610,7 @@ MonoBehaviour:
     median: {x: -0.99999994, y: 0}
     handleP: {x: 0.5, y: 0.625}
     handleN: {x: 0.5, y: 0.625}
-    controlID: 99993
+    controlID: 1236
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -575,7 +622,7 @@ MonoBehaviour:
     median: {x: 0, y: 0.99999994}
     handleP: {x: 0, y: 0.125}
     handleN: {x: 0, y: 0.125}
-    controlID: 99994
+    controlID: 1237
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -587,7 +634,7 @@ MonoBehaviour:
     median: {x: 0.99999994, y: 0}
     handleP: {x: -0.5, y: 0.625}
     handleN: {x: -0.5, y: 0.625}
-    controlID: 99995
+    controlID: 1238
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -599,7 +646,7 @@ MonoBehaviour:
     median: {x: 0.92387956, y: -0.3826834}
     handleP: {x: -0.25, y: 0.875}
     handleN: {x: -0.25, y: 0.875}
-    controlID: 99996
+    controlID: 1239
     controlPID: 0
     controlNID: 0
     pointType: 0
@@ -732,6 +779,21 @@ PolygonCollider2D:
       - {x: 0, y: 0.125}
       - {x: -0.5, y: 0.625}
       - {x: -0.25, y: 0.875}
+--- !u!114 &4230935767114116205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4475081142525192229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f3636058f12a479599995529c2558ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colour: {r: 0.13333334, g: 0.13725491, b: 0.13725491, a: 1}
+  outlineColour: {r: 0.9411765, g: 0.9647059, b: 0.9411765, a: 1}
+  shapeTransform: {fileID: 5747787404288145937}
 --- !u!1 &4649780414325690339
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,6 +971,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -933,6 +996,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!58 &3866406338310701189
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1012,6 +1076,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

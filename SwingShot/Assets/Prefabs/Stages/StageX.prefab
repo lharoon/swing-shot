@@ -49,6 +49,8 @@ MonoBehaviour:
   direction: 0
   border10Prefab: {fileID: 3975789819047953127, guid: fa01aa229416945b7b7bab46cee2c05e,
     type: 3}
+  border8Prefab: {fileID: 9024436129266201873, guid: 80f0bab337f1d470e9f49f9999eeb27c,
+    type: 3}
   border6Prefab: {fileID: 4411557634110427794, guid: 730f39b0ffb7147e2a6bd81f395b2992,
     type: 3}
   cornerBorder: {fileID: 925955066180692171, guid: acd1abf18c419481a89c76cead701eab,
@@ -59,3 +61,4 @@ MonoBehaviour:
     type: 3}
   firePivotPrefab: {fileID: 6188198501207977133, guid: 3aa082c83d0d54f708c43c989618dc01,
     type: 3}
+  nextDirection: 0
