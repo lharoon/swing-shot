@@ -8,12 +8,11 @@ public class FireMovement : MonoBehaviour
     public Rigidbody2D rb2d; // Rigidbody of parent (ie fire)
 
     private readonly float bottomSpeed = 7.0f; // Actual speed
-    //private readonly float bottomSpeed = 10.0f; // Actual speed
 
     private HingeJoint2D anchor; // Pivot
     private bool isHooked; // Whether or not fire is in contact with pivot
 
-    private Direction direction; // Current direction of fire
+    public Direction Direction { get; private set; } // Current direction of fire
     private float currentRotation;
 
     // Specifies which way fire should rotate next (clockwise or anticlockwise)
@@ -23,7 +22,7 @@ public class FireMovement : MonoBehaviour
     private void Start()
     {
         // Set initial direction & velocity, & save initial rotation
-        direction = Direction.Right;
+        Direction = Direction.Right;
         rb2d.velocity = Vector2.right * speed;
         currentRotation = rb2d.rotation;
     }
@@ -92,7 +91,7 @@ public class FireMovement : MonoBehaviour
                     break;
                 case Direction.Right:
                     newVelocity = Vector2.right * speed;
-                    rotationDir = direction == Direction.Down ?
+                    rotationDir = Direction == Direction.Down ?
                         RotationDir.Anticlockwise : RotationDir.Clockwise;
                     break;
                 case Direction.Up: // && direction = Direction.Right
@@ -101,7 +100,7 @@ public class FireMovement : MonoBehaviour
                     break;
             }
 
-            direction = newDir;
+            Direction = newDir;
         }
     }
 

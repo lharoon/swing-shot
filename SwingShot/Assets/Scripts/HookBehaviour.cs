@@ -11,10 +11,12 @@ public class HookBehaviour : MonoBehaviour
 
     private Collider2D hookCollider;
     private HingeJoint2D anchor;
+    private PlayerInfo playerInfo;
 
     private void Start()
     {
         hookCollider = GetComponent<Collider2D>();
+        playerInfo = GetComponentInParent<PlayerInfo>();
     }
 
     private void Update()
@@ -44,12 +46,16 @@ public class HookBehaviour : MonoBehaviour
     {
         anchor = collision.GetComponent<HingeJoint2D>();
         anchor.connectedBody = rb2d;
+
+        playerInfo.IsHooked = true;
     }
 
     private void Unhook()
     {
         anchor.connectedBody = null;
         anchor = null;
+
+        playerInfo.IsHooked = false;
     }
 
     /// <summary>

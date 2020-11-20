@@ -1,135 +1,206 @@
-﻿using System;
+﻿using DG.Tweening;
 using System.Collections;
-using DG.Tweening;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Manages main game loop
-/// </summary>
 public class GameManager : MonoBehaviour
 {
-    public TextMeshProUGUI titleText, instructionalText; // Title screen UI
-    public GameObject mainCamera;
-    public Transform guidePrefab, guideContainer;
-    public Transform initialDoorTransform;
-    public DoorBehaviour initialDoorBehaviour;
+    public Transform player;
+    public Transform borderPrefab, borderContainer;
+    public GameObject gameScreenCmVCam;
+    public TextMeshProUGUI titleText, instructionalText;
+    public TextMeshProUGUI menuText1, menuText2;
+    public TextMeshProUGUI gameOverText, gameOverInstructionalText;
 
-    public GameObject fire;
+    public AudioSource bgm;
 
-    private Transform playerTransform;
+    private Vector2 borderSpawnPos = new Vector2(15, 0); // Initial door position
+    private float borderSpacing = 8.0f;
+    //private List<InitialBorderBehaviour> borders = new List<InitialBorderBehaviour>();
+    private Queue<InitialBorderBehaviour> borders = new Queue<InitialBorderBehaviour>();
+    private const int maxNumBorders = 5;
+
     private LevelManager lm;
+    private PatternManager pattern;
 
-    // Fields for spawning guides on start
-    // TODO: Destroy guides in separate script (when distance is > x)
-    private float guideSpawnTrigger;
-    private const float spawnIncrement = 10f;
+    private int recordedScore;
+    private dreamloLeaderBoard dl;
+    private TopScoresPresenter topScoresPresenter;
 
-    public bool isDebug = false;
+    private bool canRestart;
 
     private void Start()
     {
-        playerTransform = GameObject.FindWithTag("Player").transform;
-        guideSpawnTrigger = playerTransform.position.x + spawnIncrement;
         lm = FindObjectOfType<LevelManager>();
+        pattern = FindObjectOfType<PatternManager>();
 
-        StartCoroutine(GameLoop());
+        foreach (Transform child in borderContainer)
+        {
+            //borders.Add(child.GetComponent<InitialBorderBehaviour>());
+            borders.Enqueue(child.GetComponent<InitialBorderBehaviour>());
+        }
+
+        // Get online scores
+        dl = dreamloLeaderBoard.GetSceneDreamloLeaderboard();
+        //dl.GetScores();
+        topScoresPresenter = FindObjectOfType<TopScoresPresenter>();
+
+        StartCoroutine("GameLoop");
     }
 
     private void Update()
     {
-        // Debug
-        if (Input.GetKeyDown(GameControls.restartKey)
-            || Input.GetMouseButtonDown(1))
-            SceneManager.LoadScene(0);
+        // TODO: Remove!
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            print("Deleting all local data!");
+            PlayerPrefs.DeleteAll();
+        }
     }
 
     private IEnumerator GameLoop()
     {
-        if (!isDebug)
-            yield return StartCoroutine(GameStarting());
-        yield return StartCoroutine(GamePlaying());
-        yield return StartCoroutine(GameEnding());
+        yield return StartCoroutine("GameStart");
+        yield return StartCoroutine("GameInProgress");
+        yield return StartCoroutine("GameEnd");
     }
 
-    private IEnumerator GameStarting()
+    private IEnumerator GameStart()
     {
-        print("Game starting");
+        print("Game is starting");
 
-        while (!Input.GetKeyDown(GameControls.fireKey) && !Input.GetMouseButtonDown(0))
+        void SpawnBorder()
         {
-            if (playerTransform.position.x > guideSpawnTrigger)
-                SpawnNewGuideOnStart();
+            var border = Instantiate(borderPrefab, borderContainer);
+            border.position = borderSpawnPos;
+            //borders.Add(border.GetComponent<InitialBorderBehaviour>());
+            borders.Enqueue(border.GetComponent<InitialBorderBehaviour>());
+            borderSpawnPos.x += borderSpacing;
+        }
+
+        while (
+            !Input.GetKeyDown(GameControls.fireKey) &&
+            !Input.GetMouseButtonDown(0))
+        {
+            if (player.position.x > borderSpawnPos.x - borderSpacing)
+                SpawnBorder();
+            if (borders.Count > maxNumBorders)
+            {
+                Destroy(borders.Peek().gameObject);
+                borders.Dequeue();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+                LoadNameEntryScreen();
 
             yield return null;
         }
+
+        SpawnBorder();
     }
 
-    private void SpawnNewGuideOnStart()
+    private IEnumerator GameInProgress()
     {
-        guideSpawnTrigger += spawnIncrement;
-        var guideSpawnPos = new Vector2(guideSpawnTrigger + spawnIncrement, 0);
-        var guideInstance = Instantiate(guidePrefab);
-        guideInstance.position = guideSpawnPos;
-        guideInstance.parent = guideContainer;
-    }
+        print("Game is in progress");
 
-    private IEnumerator GamePlaying()
-    {
-        print("Game playing");
+        // Activate main (virtual) camera
+        gameScreenCmVCam.SetActive(true);
 
-        TransitionToMainCam();
-
-        lm.enabled = true;
-        ActivateFire();
-
-        initialDoorTransform.parent = null;
-
-        var roundedXPos = (int)initialDoorTransform.position.x;
-        if (roundedXPos % 2 != 0) roundedXPos++;
-        var doorPos = new Vector2(roundedXPos, 0);
-        initialDoorTransform.position = doorPos;
-        initialDoorBehaviour.enabled = true;
-
-        while (playerTransform != null)
-            yield return null;
-    }
-
-    private void ActivateFire()
-    {
-        fire.transform.parent = null;
-        fire.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        fire.GetComponentInChildren<FireMovement>().enabled = true;
-    }
-
-    private void TransitionToMainCam()
-    {
-        mainCamera.SetActive(true);
-
-        // Hide title screen UI
+        // Hide title screen UI & increase opacity of (start) borders
         titleText.DOFade(0, 0.5f);
-        instructionalText.DOFade(0, 0.05f);
+        //instructionalText.DOFade(0, 0.05f);
+        instructionalText.enabled = false;
+        //menuText1.DOFade(0, 0.25f); // Move to the left
+        //menuText1.transform.DOMoveX()
+        menuText1.DOFade(0, 0.25f);
+        topScoresPresenter.HideText();
+        foreach (var b in borders)
+        {
+            if (b != null) b.FadeSprites();
+        }
 
-        foreach (var guide in GameObject.FindGameObjectsWithTag("guide"))
-            guide.GetComponentInChildren<SpriteFader>().enabled = true;
+        // Generate & position level correctly
+        int xPos = (int)lm.transform.position.x;
+        if (xPos % 2 != 0) xPos++; // Ensure whole number & even
+        lm.transform.position = new Vector2(xPos, 0);
+        lm.GenerateLevel();
+
+        // Enable scoring
+        var scoreUpdater = player.GetComponentInChildren<ScoreUpdater>();
+        scoreUpdater.enabled = true;
+
+        // Enable background effects & start music
+        if (pattern != null) pattern.enabled = true;
+        bgm.Play();
+
+        // TODO: Activate fire
+
+        // Continue until player is dead
+        while (player != null)
+        {
+            recordedScore = scoreUpdater.Score; // Local copy of score
+            yield return null;
+        }
     }
 
-    private IEnumerator GameEnding()
+    private IEnumerator GameEnd()
     {
-        print("Game ending");
+        print("Game is ending");
 
-        var fireInfo = fire.GetComponentInChildren<FireInfo>();
+        // Reveal game over UI
+        gameOverText.DOFade(1, 0.3f);
+        StartCoroutine("EnableGameOverInstructionalText");
+        menuText1.DOFade(1, 0.25f);
+        topScoresPresenter.ShowText();
 
-        if (!fireInfo.IsOverPlayer)
+        string name = PlayerPrefs.GetString("playerName");
+        dl.AddScore(name, recordedScore);
+        StartCoroutine(topScoresPresenter.Refresh(name, recordedScore));
+
+        // Kill music (maybe don't?)
+        DOTween.To(() => bgm.volume, x => bgm.volume = x, 0, 0.2f);
+
+        while (true)
         {
-            // TODO
+            if (canRestart)
+            {
+                if (
+                    Input.GetKeyDown(GameControls.fireKey) ||
+                    Input.GetMouseButtonDown(0))
+                {
+                    DOTween.KillAll();
+                    SceneManager.LoadScene(1);
+                }
+                else if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    LoadNameEntryScreen();
+                }
+            }
+            yield return null;
         }
-        else
-        {
-            // TODO
-        }
+    }
 
-        throw new NotImplementedException();
+    private IEnumerator EnableGameOverInstructionalText()
+    {
+        yield return new WaitForSeconds(1);
+        gameOverInstructionalText.gameObject.SetActive(true);
+        gameOverInstructionalText.DOFade(1, 1).SetEase(Ease.Linear);
+        canRestart = true; // Only allow player to restart once text is visible
+        StartCoroutine("FadeOutAndInGameOverInstructionalText");
+    }
+
+    private IEnumerator FadeOutAndInGameOverInstructionalText()
+    {
+        yield return new WaitForSeconds(1);
+        gameOverInstructionalText.DOFade(0, 1).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InQuad);
+    }
+
+    private void LoadNameEntryScreen()
+    {
+        DOTween.KillAll();
+        PlayerPrefs.DeleteKey("playerName");
+        SceneManager.LoadScene(0);
     }
 }

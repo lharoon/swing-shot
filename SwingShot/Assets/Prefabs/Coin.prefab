@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 3159143270626752756}
   - component: {fileID: 5563309017293418130}
   - component: {fileID: 7215373104501209522}
+  - component: {fileID: 6340777602249493736}
   m_Layer: 0
   m_Name: Coin
-  m_TagString: Untagged
+  m_TagString: coin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a845f3fd58282473086c9e2faa46b4bc, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7490196}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -139,5 +140,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5106720cbed064773a58396ffe6ba0d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newColour: {r: 0.13333334, g: 0.13725491, b: 0.13725491, a: 1}
+--- !u!114 &6340777602249493736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8782983079225254542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d5352be2ef8411e833a68eabd06e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

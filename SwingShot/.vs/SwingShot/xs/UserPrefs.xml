@@ -1,20 +1,33 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/StageManager.cs">
+﻿<Properties StartupConfiguration="{D8FB89FE-B250-E378-A49E-0BB85B97E5F0}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Indicator.cs">
     <Files>
-      <File FileName="Assets/Scripts/LevelManager.cs" Line="14" Column="40" IsPinned="True" />
-      <File FileName="Assets/Scripts/StageManager.cs" Line="21" Column="10" IsPinned="True" />
-      <File FileName="Assets/Scripts/CamTargetPositioner.cs" />
-      <File FileName="Assets/Scripts/OverlayAdder.cs" />
-      <File FileName="Assets/Scripts/SpriteColourSwapper.cs" />
-      <File FileName="Assets/Scripts/TrailBehaviour.cs" />
-      <File FileName="Assets/Scripts/FireInfo.cs" />
-      <File FileName="Assets/Scripts/GameManager.cs" />
-      <File FileName="Assets/Scripts/TurretController.cs" />
+      <File FileName="Assets/Scripts/Indicator.cs" Line="12" Column="1" />
+      <File FileName="Assets/Scripts/HookBehaviour.cs" Line="58" Column="37" />
+      <File FileName="Assets/Scripts/PlayerInfo.cs" Line="6" Column="39" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SwingShot" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Plugins" expanded="True">
+                <Node name="Shaper2D" expanded="True">
+                  <Node name="Scripts" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Scripts" expanded="True">
+                <Node name="NameEntryScreenScripts" expanded="True" />
+                <Node name="Indicator.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ed7a0967-5600-4760-aeef-346bcdf9acb6" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="dc9d3e8f-7989-4aad-aeec-b438311e7663" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

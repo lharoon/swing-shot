@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum DoorAngle { MinusFortyFive, Zero, FortyFive }
@@ -10,18 +11,21 @@ public class StageManager : MonoBehaviour
     public List<DoorAngle> doorAngles;
     public int spacing;
     public int number;
-    public Direction direction;
-    public Direction nextDirection;
     #endregion
 
+    #region Prefabs for segment elements
     public Transform border10Prefab, border8Prefab, border6Prefab;
     public Transform cornerBorder, cornerDoor, cornerBorder2;
     public FirePivotInfo firePivotPrefab;
     public Transform coinPrefab;
+    public List<Transform> debrisPrefabs;
+    #endregion
+
+    public Direction CurrentDirection { get; set; }
+    public Direction NextDirection { get; set; }
 
     private LevelManager lm;
     private Quaternion minusFortyFive, zero, fortyFive, ninety, minusNinety;
-
     private Vector2 doorSpawnPos;
 
     private void Awake()
@@ -37,38 +41,21 @@ public class StageManager : MonoBehaviour
         doorSpawnPos = transform.position;
     }
 
-    public void SpawnDoors()
+    public void SpawnStageSegments()
     {
-        int numDoors = doorAngles.Count * number; // Num doors in stage minus corner door
-        int numDoorsInLevel = lm.doorsInLevel.Count + numDoors + 1; // Total num doors plus corner door
+        int numSegments = GetNumOfSegmentsInStage();
 
-        // Add door to stage so that polarity of corner door is correct if required
-        if (direction == Direction.Right && nextDirection == Direction.Up)
+        for (int j = 0; j < numSegments; j++)
         {
-            // Force last door to be non-inverted
-            if (lm.StageCount != 0) { if (numDoorsInLevel % 2 != 0) numDoors++; }
-            else numDoors++;
-        }
-        else if (direction == Direction.Up && nextDirection == Direction.Right)
-        {
-            // Force last door to be inverted
-            if (numDoorsInLevel % 2 == 0) numDoors++;
-        }
-        else if (direction == Direction.Right && nextDirection == Direction.Down)
-        {
-            // Force last door to be inverted
-            if (lm.StageCount != 0)
-                if (numDoorsInLevel % 2 == 0) numDoors++;
-        }
-        else
-            print("Unaccounted for scenario!");
+            var segment = InstantiateSegment("Segment" + j);
 
-        for (int j = 0; j < numDoors; j++)
-        {
             // Skip very first door
             if (lm.StageCount == 0 && j == 0)
             {
-                SpawnCoin();
+                segment.DoorInfo = FindObjectOfType<DoorInfo>();
+                segment.DoorInfo.transform.parent = segment.transform;
+                SpawnCoin(segment);
+                SpawnBorder(border8Prefab, Quaternion.identity, segment);
                 UpdateSpawnPos(spacing);
                 continue;
             }
@@ -89,16 +76,24 @@ public class StageManager : MonoBehaviour
                     break;
             }
 
-            bool isLast = j == numDoors - 1;
+            bool isLast = j == numSegments - 1;
 
             // Instantiate random door
-            var selectedDoorIdx = Random.Range(0, lm.doorPrefabsForStage.Count);
-            SpawnDoor(lm.doorPrefabsForStage[selectedDoorIdx], rotation, isLast);
+            var selectedDoorIdx = Random.Range(lm.DoorFrom, lm.DoorTo);
+            segment.DoorInfo = SpawnDoor(lm.allDoorPrefabs[selectedDoorIdx],
+                segment, rotation, isLast);
 
             // Instantiate coin
             if (lm.StageCount != 0 && j == 0)
-                SpawnCoin(true);
-            SpawnCoin();
+                SpawnCoin(segment, true);
+            SpawnCoin(segment);
+
+            // Spawn debris
+            //if (Random.Range(0, 2) == 0)
+            //    SpawnDebris(segment);
+            int r = Random.Range(0, 100);
+            bool spawnDebris = lm.StageCount < 6 ? r < 30 + (6 * lm.StageCount) : r < 60;
+            if (spawnDebris) SpawnDebris(segment);
 
             // Instantiate border with every door except last
             if (!isLast)
@@ -106,16 +101,13 @@ public class StageManager : MonoBehaviour
                 switch (spacing)
                 {
                     case 6:
-                        Instantiate(border6Prefab, doorSpawnPos,
-                            Quaternion.identity).parent = transform;
+                        SpawnBorder(border6Prefab, Quaternion.identity, segment);
                         break;
                     case 8:
-                        Instantiate(border8Prefab, doorSpawnPos,
-                            Quaternion.identity).parent = transform;
+                        SpawnBorder(border8Prefab, Quaternion.identity, segment);
                         break;
                     case 10:
-                        Instantiate(border10Prefab, doorSpawnPos,
-                            Quaternion.identity).parent = transform;
+                        SpawnBorder(border10Prefab, Quaternion.identity, segment);
                         break;
                 }
 
@@ -123,26 +115,30 @@ public class StageManager : MonoBehaviour
             }
         }
 
+        var cornerSegment = InstantiateSegment("CornerSegment");
+        cornerSegment.IsEndSegment = true;
+        lm.EndSegments.Add(cornerSegment);
+
         // Instantiate corner (border & door)
-        if (nextDirection == Direction.Right && direction == Direction.Down ||
-            nextDirection == Direction.Up)
+        if (NextDirection == Direction.Right && CurrentDirection == Direction.Down ||
+            NextDirection == Direction.Up)
         {
-            Instantiate(cornerBorder2, doorSpawnPos, ninety).parent = transform;
+            SpawnBorder(cornerBorder2, ninety, cornerSegment);
             UpdateSpawnPos(lm.GapAtEnd);
-            SpawnDoor(cornerDoor, fortyFive);
-            SpawnFirePivot(new Vector2(-4, 4), nextDirection);
+            cornerSegment.DoorInfo = SpawnDoor(cornerDoor, cornerSegment, fortyFive);
+            SpawnFirePivot(new Vector2(-4, 4), NextDirection, cornerSegment);
         }
-        else if (nextDirection == Direction.Right && direction == Direction.Up ||
-            nextDirection == Direction.Down)
+        else if (NextDirection == Direction.Right && CurrentDirection == Direction.Up ||
+            NextDirection == Direction.Down)
         {
-            Instantiate(cornerBorder, doorSpawnPos, Quaternion.identity).parent = transform;
+            SpawnBorder(cornerBorder, Quaternion.identity, cornerSegment);
             UpdateSpawnPos(lm.GapAtEnd);
-            SpawnDoor(cornerDoor, minusFortyFive);
-            SpawnFirePivot(new Vector2(-4, -4), nextDirection);
+            cornerSegment.DoorInfo = SpawnDoor(cornerDoor, cornerSegment, minusFortyFive);
+            SpawnFirePivot(new Vector2(-4, -4), NextDirection, cornerSegment);
         }
 
         // Set rotation
-        switch (direction)
+        switch (CurrentDirection)
         {
             case Direction.Up:
                 transform.localRotation = ninety;
@@ -151,45 +147,132 @@ public class StageManager : MonoBehaviour
                 transform.localRotation = minusNinety;
                 break;
         }
+
+        lm.NextSpawnPos = cornerSegment.DoorInfo.transform.position;
     }
 
-    private void SpawnCoin(bool isFirst = false)
+    private int GetNumOfSegmentsInStage()
+    {
+        int numSegments = doorAngles.Count * number; // Num segments in stage minus corner segment
+        int numSegmentsInLevel = lm.Segments.Count + numSegments + 1; // Total num segments plus corner segment
+
+        // Add door to stage so that polarity of corner door is correct if required
+        if (CurrentDirection == Direction.Right && NextDirection == Direction.Up)
+        {
+            // Force last door to be non-inverted
+            if (lm.StageCount != 0) { if (numSegmentsInLevel % 2 != 0) numSegments++; }
+            else numSegments++;
+        }
+        else if (CurrentDirection == Direction.Up && NextDirection == Direction.Right)
+        {
+            // Force last door to be inverted
+            if (numSegmentsInLevel % 2 == 0) numSegments++;
+        }
+        else if (CurrentDirection == Direction.Right && NextDirection == Direction.Down)
+        {
+            // Force last door to be inverted
+            if (lm.StageCount != 0)
+                if (numSegmentsInLevel % 2 == 0) numSegments++;
+        }
+        else if (CurrentDirection == Direction.Down && NextDirection == Direction.Right)
+        {
+            // TODO
+        }
+        else
+            print("Unaccounted for scenario!");
+
+        return numSegments;
+    }
+
+    private SegmentInfo InstantiateSegment(string segmentName)
+    {
+        var segment = new GameObject { name = segmentName };
+        segment.transform.position = doorSpawnPos;
+        segment.transform.parent = transform;
+        var segmentInfo = segment.AddComponent<SegmentInfo>();
+        segmentInfo.Idx = lm.Segments.Count;
+        segmentInfo.StageNum = lm.StageCount;
+        lm.Segments.Add(segmentInfo);
+        return segmentInfo;
+    }
+
+    private void SpawnBorder(Transform borderPrefab, Quaternion quaternion,
+        SegmentInfo segment)
+    {
+        var border = Instantiate(borderPrefab, doorSpawnPos, quaternion);
+        border.parent = segment.transform;
+        border.gameObject.SetActive(ShouldSegmentBeActive(segment));
+    }
+
+    private void SpawnDebris(SegmentInfo segment)
+    {
+        float halfSpacing = spacing / 2;
+        float x = Random.Range(doorSpawnPos.x - halfSpacing, doorSpawnPos.x + halfSpacing);
+        float y = Random.Range(doorSpawnPos.y - 5.0f, doorSpawnPos.y + 5.0f);
+        // TODO: Randomise rotation & scale
+        var debris = Instantiate(debrisPrefabs[Random.Range(0, debrisPrefabs.Count)],
+            new Vector2(x, y),
+            Quaternion.Euler(0, 0, Random.Range(0.0f, 360.0f)));
+        debris.parent = segment.transform;
+        debris.gameObject.SetActive(ShouldSegmentBeActive(segment));
+    }
+
+    private void SpawnCoin(SegmentInfo segment, bool isFirst = false)
     {
         var coinSpawnPos = doorSpawnPos;
         if (isFirst)
             coinSpawnPos.x -= spacing / 2;
         else
             coinSpawnPos.x += spacing / 2;
-        Instantiate(coinPrefab, coinSpawnPos, Quaternion.identity).parent = transform;
+        var coin = Instantiate(coinPrefab, coinSpawnPos, Quaternion.identity);
+        coin.parent = segment.transform;
+        coin.gameObject.SetActive(ShouldSegmentBeActive(segment));
+        // lm.CoinCount is incremented in CoinInfo
     }
 
-    private void SpawnFirePivot(Vector2 offset, Direction newDir)
+    private void SpawnFirePivot(Vector2 offset, Direction newDir, SegmentInfo segment)
     {
         var fp = Instantiate(firePivotPrefab, doorSpawnPos + offset, Quaternion.identity);
         fp.NewDirection = newDir;
-        fp.transform.parent = transform;
+        fp.transform.parent = segment.transform;
+        fp.gameObject.SetActive(ShouldSegmentBeActive(segment));
     }
 
-    Transform SpawnDoor(Transform doorTransform, Quaternion rot, bool isLast = false)
+    private DoorInfo SpawnDoor(Transform doorTransform, SegmentInfo segment,
+    Quaternion rot, bool isLast = false)
     {
         var door = Instantiate(doorTransform, doorSpawnPos, rot);
-        door.parent = transform;
-        lm.doorsInLevel.Add(door);
+        door.parent = segment.transform;
 
         // Invert doors alternately
-        if (lm.doorsInLevel.Count % 2 != 0)
+        if (lm.Segments.Count % 2 != 0)
             door.transform.localScale *= new Vector2(1, -1);
 
         if (isLast)
             door.tag = "penultimate";
 
-        return door;
+        door.gameObject.SetActive(ShouldSegmentBeActive(segment));
+
+        return door.GetComponent<DoorInfo>();
     }
 
-    private void UpdateSpawnPos(int gap)
+    private void UpdateSpawnPos(float gap)
     {
         var newPos = doorSpawnPos;
         newPos.x += gap;
         doorSpawnPos = newPos;
+    }
+
+    private bool ShouldSegmentBeActive(SegmentInfo segment)
+    {
+        return segment.Idx < 3;
+    }
+
+    public IEnumerator DestroyStage()
+    {
+        yield return new WaitForSeconds(5.0f);
+        // Don't destroy stage if game is already over
+        if (GameObject.FindGameObjectWithTag("Player") != null)
+            Destroy(gameObject);
     }
 }

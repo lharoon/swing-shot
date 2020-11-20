@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Updates transform of object that camera is following
@@ -8,38 +7,28 @@ public class CamTargetPositioner : MonoBehaviour
 {
     public Transform camTargetTransform;
 
-    // Player's distance from camera
-    private Vector3 offset;
-
+    private Vector3 offset; // Player's distance from camera
+    private LevelManager lm;
+    private int targetStage = 0;
     private bool isVertical = false;
-
-    private GameObject lastDoorInStage;
-    List<GameObject> lastDoors = new List<GameObject>();
     private Vector2 startOfStage = Vector2.zero, endOfStage;
+    private int lastEndSegmentIdx = -1;
 
     private void Start()
     {
         offset = camTargetTransform.position - transform.position;
-    }
-
-    private void Update()
-    {
-        if (lastDoorInStage == null)
-        {
-            var endObjs = GameObject.FindGameObjectsWithTag("end");
-            var lastDoorInStage = ObjUtils.GetNearestObject(endObjs,
-                transform.position, lastDoors);
-            if (lastDoorInStage != null)
-            {
-                endOfStage = lastDoorInStage.transform.position;
-                lastDoors.Add(lastDoorInStage);
-                //print("startOfStage: " + startOfStage); print("endOfStage: " + endOfStage);
-            }
-        }
+        lm = FindObjectOfType<LevelManager>();
     }
 
     private void FixedUpdate()
     {
+        if (endOfStage == Vector2.zero)
+        {
+            if (lm.EndSegments.Count > 0)
+                endOfStage = lm.EndSegments[targetStage++].DoorInfo.transform.position;
+            return;
+        }
+
         //var newPos = transform.position + offset;
         Vector3 newPos;
         if (!isVertical)
@@ -77,13 +66,15 @@ public class CamTargetPositioner : MonoBehaviour
     {
         if (collision.CompareTag("goal"))
         {
-            var isAtEnd = collision.transform.parent.CompareTag("end");
+            var segment = collision.GetComponentInParent<SegmentInfo>();
 
-            if (isAtEnd)
+            if (segment.IsEndSegment && segment.Idx != lastEndSegmentIdx)
             {
+                //print("targetStage: " + targetStage);
                 startOfStage = endOfStage;
-                lastDoorInStage = null;
-                isVertical = !isVertical; // TODO: Rely on direction property instead
+                endOfStage = lm.EndSegments[targetStage++].DoorInfo.transform.position;
+                isVertical = !isVertical;
+                lastEndSegmentIdx = segment.Idx;
             }
         }
     }

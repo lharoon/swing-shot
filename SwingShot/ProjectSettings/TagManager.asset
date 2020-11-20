@@ -18,6 +18,12 @@ TagManager:
   - penultimate
   - fire
   - fire-pivot
+  - debris
+  - coin
+  - enemy-laser
+  - cam-centre
+  - black-line
+  - white-line
   layers:
   - Default
   - TransparentFX
@@ -27,7 +33,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - PostProcessing
   - 
   - 
   - 

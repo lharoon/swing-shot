@@ -7,25 +7,31 @@ using DG.Tweening;
 public class Indicator : MonoBehaviour
 {
     private Shaper2D[] shapes;
+    private bool isFadingOut, isFadingIn;
+    private PlayerInfo playerInfo;
 
     private void Start()
     {
         shapes = GetComponentsInChildren<Shaper2D>();
+        playerInfo = GetComponentInParent<PlayerInfo>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Update()
     {
-        if (collision.name == "Turret" && (Input.GetKey(GameControls.fireKey) || Input.GetMouseButton(0)))
+        if (playerInfo.IsHooked && !isFadingOut)
+        {
+            isFadingIn = false;
             FadeShapes(0, 0.15f);
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.name == "Turret")
+            isFadingOut = true;
+        }
+        else if (!playerInfo.IsHooked && !isFadingIn)
+        {
+            isFadingOut = false;
             FadeShapes(1, 0.15f);
+            isFadingIn = true;
+        }
     }
 
-    // TODO: Try scaling instead
     private void FadeShapes(float alpha, float fadeSpeed)
     {
         foreach (var s in shapes)

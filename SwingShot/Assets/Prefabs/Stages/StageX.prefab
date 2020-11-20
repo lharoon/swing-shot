@@ -46,8 +46,6 @@ MonoBehaviour:
   doorAngles: 01000000
   spacing: 6
   number: 4
-  direction: 0
-  nextDirection: 0
   border10Prefab: {fileID: 3975789819047953127, guid: fa01aa229416945b7b7bab46cee2c05e,
     type: 3}
   border8Prefab: {fileID: 9024436129266201873, guid: 80f0bab337f1d470e9f49f9999eeb27c,
@@ -56,7 +54,7 @@ MonoBehaviour:
     type: 3}
   cornerBorder: {fileID: 925955066180692171, guid: acd1abf18c419481a89c76cead701eab,
     type: 3}
-  cornerDoor: {fileID: 3617579326397268693, guid: 42fb6af9163934eabae76033ea3c4ba0,
+  cornerDoor: {fileID: 1913983823001308206, guid: bf17d1473d2384f6faba26f53a4a2f97,
     type: 3}
   cornerBorder2: {fileID: 925955066180692171, guid: ac3f95d3947c74b6099895d411ea6a23,
     type: 3}
@@ -64,3 +62,6 @@ MonoBehaviour:
     type: 3}
   coinPrefab: {fileID: 8782983079225254536, guid: 033bc288a549b43c7b40d70c394902af,
     type: 3}
+  debrisPrefabs:
+  - {fileID: 6683528779938574685, guid: deb5868015e324aabba06f62ca0c9978, type: 3}
+  - {fileID: 2776613932852592876, guid: 8f98e9ddd840b4c88b91e408dada81f6, type: 3}

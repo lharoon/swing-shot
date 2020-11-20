@@ -1,5 +1,4 @@
-﻿using DG.Tweening;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Directs turret at nearest target & fires laser when prompted
@@ -18,15 +17,9 @@ public class TurretController : MonoBehaviour
     private LightningBolt2D bolt2D;
     private MeshRenderer meshRenderer;
 
-    private FireInfo fire;
-    private bool isBlack;
-    private int laserOrderInLayer;
-
     private void Awake()
     {
         bolt2D = laser.GetComponent<LightningBolt2D>();
-        laserOrderInLayer = bolt2D.sortingLayer;
-        fire = FindObjectOfType<FireInfo>();
     }
 
     private void Start()
@@ -38,13 +31,6 @@ public class TurretController : MonoBehaviour
 
     private void Update()
     {
-        if (targetTransform != null)
-        {
-            //var d = Vector3.Distance(transform.position, targetTransform.position);
-            var d = targetTransform.position - transform.position;
-            //print("Distance: " + d);
-        }
-
         if (!Input.GetKey(GameControls.fireKey) && !Input.GetMouseButton(0))
         {
             var target = GetClosestTarget();
@@ -52,16 +38,18 @@ public class TurretController : MonoBehaviour
             else targetTransform = null;
         }
 
-        if ((Input.GetKeyDown(GameControls.fireKey) || Input.GetMouseButtonDown(0)) && targetTransform != null)
+        if ((Input.GetKeyDown(GameControls.fireKey) || Input.GetMouseButtonDown(0)) &&
+            targetTransform != null)
         {
-            //bolt2D.FireOnce();
             ShootLaser();
         }
-        else if ((Input.GetKeyUp(GameControls.fireKey) || Input.GetMouseButtonUp(0)) && laserEndPoint != null
-            || targetTransform == null)
+        else if ((Input.GetKeyUp(GameControls.fireKey) || Input.GetMouseButtonUp(0)) &&
+            laserEndPoint != null ||
+            targetTransform == null)
             KillLaser();
 
-        if ((Input.GetKey(GameControls.fireKey) || Input.GetMouseButton(0) || isDebug) && targetTransform != null)
+        if ((Input.GetKey(GameControls.fireKey) || Input.GetMouseButton(0) || isDebug) &&
+            targetTransform != null)
         {
             //&& laserEndPoint != null)
             DrawLaser();
@@ -75,31 +63,6 @@ public class TurretController : MonoBehaviour
             bolt2D.startPoint = turretTransform.position;
             bolt2D.endPoint = targetTransform.position;
             bolt2D.Generate();
-
-            //line.SetPosition(0, turretTransform.position);
-            //line.SetPosition(1, targetTransform.position);
-        }
-
-        //if (gm.HasMissedTarget)
-        //{
-        //    print("Miss");
-        //    bolt2D.lineColor = new Color(255, 54, 62);
-        //}
-
-        // Switch laser colour when fire collides with player
-        if (fire.IsOverPlayer && !isBlack)
-        {
-            DOTween.To(() => bolt2D.lineColor, x => bolt2D.lineColor = x,
-                GameColours.black, 0.5f);
-            bolt2D.orderInLayer = laserOrderInLayer + GameColours.fireOrderInLayer;
-            isBlack = true;
-        }
-        else if (!fire.IsOverPlayer && isBlack)
-        {
-            DOTween.To(() => bolt2D.lineColor, x => bolt2D.lineColor = x,
-                GameColours.white, 0.25f);
-            bolt2D.orderInLayer = laserOrderInLayer;
-            isBlack = false;
         }
     }
 

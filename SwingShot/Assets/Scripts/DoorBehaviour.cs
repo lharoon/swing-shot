@@ -5,21 +5,16 @@
 /// </summary>
 public class DoorBehaviour : MonoBehaviour
 {
-    public float doorSpeed = 25f;
+    public float doorSpeed = 25.0f;
 
     public Transform doorTransform, doorStopTransform;
     public Transform bullseyeOverlayTransform;
     public GameObject pivot;
 
-    private Vector3 originalDoorPos;
-    private bool isActivated = false;
+    public bool IsActivated { get; private set; }
 
-    private void Awake()
-    {
-        // Make target if is first one
-        //if (FindObjectsOfType<DoorBehaviour>().Length == 1)
-        //    tag = "target";
-    }
+    private Vector3 originalDoorPos;
+    private Padlock padlock;
 
     private void Start()
     {
@@ -28,11 +23,13 @@ public class DoorBehaviour : MonoBehaviour
 
         // Ensure pivot is at bullseye's position
         pivot.transform.position = transform.position;
+
+        padlock = GetComponent<Padlock>();
     }
 
     private void Update()
     {
-        if (isActivated)
+        if (IsActivated && !padlock.isLocked)
         {
             if (doorTransform != null)
                 OpenDoor(doorTransform, doorStopTransform);
@@ -81,13 +78,13 @@ public class DoorBehaviour : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("laser"))
-            isActivated = true;
+            IsActivated = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("laser"))
-            isActivated = false;
+            IsActivated = false;
     }
     #endregion
 }

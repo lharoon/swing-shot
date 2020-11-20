@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 /// <summary>
 /// Destroys player on collision
@@ -6,14 +7,29 @@
 public class PlayerDeath : MonoBehaviour
 {
     public FlatFX explosionWhite, explosionBlack;
-    public Transform trailTransform;
+    public TrailKiller trail;
+    public PlayerInfo playerInfo;
+    public Transform camTargetPos;
 
-    private FireInfo fire;
+    private FireInfo fireInfo;
     private bool isDestroyed;
+
+    private float buffer = 100;
 
     private void Start()
     {
-        fire = FindObjectOfType<FireInfo>();
+        fireInfo = FindObjectOfType<FireInfo>();
+    }
+
+    private void Update()
+    {
+        //if (trail.startWidth <= 0)
+        //    KillPlayer();
+
+        var playerScreenPos = Camera.main.WorldToScreenPoint(transform.position);
+        if (playerScreenPos.x < 0 - buffer || playerScreenPos.x > Screen.width + buffer ||
+            playerScreenPos.y < 0 - buffer || playerScreenPos.y > Screen.height + buffer)
+            KillPlayer();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -22,14 +38,44 @@ public class PlayerDeath : MonoBehaviour
             KillPlayer();
     }
 
-    private void KillPlayer()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!fire.IsOverPlayer)
-            explosionWhite.AddEffect(transform.position, 2);
-        else
+        if (collision.CompareTag("enemy-laser") && !isDestroyed)
+            KillPlayer();
+
+        if (collision.gameObject.CompareTag("debris"))
+        {
+            playerInfo.Health -= 0.5f;
+            //print("playerInfo.Health: " + playerInfo.Health);
+            if (playerInfo.Health <= 0)
+                KillPlayer();
+        }
+    }
+
+    public void KillPlayer()
+    {
+        playerInfo.Health = 0;
+
+        if (fireInfo != null && fireInfo.IsOverPlayer)
             explosionBlack.AddEffect(transform.position, 2);
-        trailTransform.parent = null;
-        Destroy(gameObject);
+        else
+            explosionWhite.AddEffect(transform.position, 2);
+
+        //trail.transform.parent = null; // Kills trail
+        //trail.KillTrail();
+
+        if (transform.parent != null)
+            Destroy(transform.parent.gameObject);
+        else
+            Destroy(gameObject);
+
         isDestroyed = true;
     }
+
+    //private void HideTrail()
+    //{
+    //    trail.transform.parent = null;
+    //    DOTween.To(() => trail.startColor, x => trail.startColor = x, Color.clear, 1);
+    //    DOTween.To(() => trail.endColor, x => trail.endColor = x, Color.clear, 1);
+    //}
 }

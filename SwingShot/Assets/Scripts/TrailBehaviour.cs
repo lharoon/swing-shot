@@ -1,59 +1,41 @@
-﻿using UnityEngine;
+﻿using System.Collections;
 using DG.Tweening;
+using UnityEngine;
 
-/// <summary>
-/// Hides trail when player is destroyed
-/// </summary>
 [RequireComponent(typeof(TrailRenderer))]
 public class TrailBehaviour : MonoBehaviour
 {
-    private TrailRenderer trailRenderer;
-    private bool isDetached;
+    public Transform player;
 
-    private int trailSortingOrder;
-    private FireInfo fire;
-    private bool isBlack;
+    private TrailRenderer tr;
+    private const float timeToDie = 1.0f;
+    private bool isBeingKilled;
 
     private void Start()
     {
-        trailRenderer = GetComponent<TrailRenderer>();
-        trailSortingOrder = trailRenderer.sortingOrder;
-        fire = FindObjectOfType<FireInfo>();
+        tr = GetComponent<TrailRenderer>();
     }
 
     private void Update()
     {
-        // Switch trail colour when fire collides with player
-        if (fire.IsOverPlayer && !isBlack)
+        if (player != null)
+            transform.position = player.position;
+        else if (!isBeingKilled)
         {
-            DOTween.To(() => trailRenderer.startColor,
-                x => trailRenderer.startColor = x, GameColours.black, 0.5f);
-            DOTween.To(() => trailRenderer.endColor,
-                x => trailRenderer.endColor = x, GameColours.black, 0.5f);
-            trailRenderer.sortingOrder = trailSortingOrder + GameColours.fireOrderInLayer;
-            isBlack = true;
-        }
-        else if (!fire.IsOverPlayer && isBlack)
-        {
-            DOTween.To(() => trailRenderer.startColor,
-                x => trailRenderer.startColor = x, GameColours.white, 0.25f);
-            DOTween.To(() => trailRenderer.endColor,
-                x => trailRenderer.endColor = x, GameColours.white, 0.25f);
-            trailRenderer.sortingOrder = trailSortingOrder;
-            isBlack = false;
-        }
+            isBeingKilled = true;
 
-        if (transform.parent == null && !isDetached)
-        {
-            isDetached = true;
+            // Fade out trail renderer
+            DOTween.To(() => tr.startColor, x => tr.startColor = x, Color.clear, timeToDie);
+            DOTween.To(() => tr.endColor, x => tr.endColor = x, Color.clear, timeToDie);
 
-            DOTween.To(() => trailRenderer.startColor,
-                x => trailRenderer.startColor = x, Color.clear, 1);
-            DOTween.To(() => trailRenderer.endColor,
-                x => trailRenderer.endColor = x, Color.clear, 1);
+            KillObjectAfterT(timeToDie * 2);
         }
+    }
 
-        if (Mathf.Approximately(trailRenderer.endColor.a, 0))
-            Destroy(gameObject);
+    private IEnumerator KillObjectAfterT(float t)
+    {
+        //isBeingKilled = true;
+        yield return new WaitForSeconds(t);
+        Destroy(gameObject);
     }
 }
