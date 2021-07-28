@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ScoreUpdater : MonoBehaviour
@@ -13,16 +14,21 @@ public class ScoreUpdater : MonoBehaviour
     private Vector2 startOfStage;
 
     private int bonus = 0, penalty = 0;
-    private const int coinPts = 2, maxCombo = 3, penaltyPts = 10;
+    private const int coinPts = 2, maxCombo = 3, penaltyPts = 5;
     private int lastCollectedCoin = -2;
 
     private Transform bonusText, penaltyText;
     private Vector3 bonusTextOffset = new Vector2(0.5f, 0.5f);
     private Vector3 penaltyTextOffset = new Vector2(0.5f, -0.5f);
 
+    private List<AudioSource> coinSfx = new List<AudioSource>();
+
     private void Start()
     {
         startOfStage = transform.position;
+
+        foreach (Transform t in GameObject.Find("CoinSFX").transform)
+            coinSfx.Add(t.GetComponent<AudioSource>());
     }
 
     private void Update()
@@ -61,6 +67,8 @@ public class ScoreUpdater : MonoBehaviour
             {
                 Combo = 0;
             }
+            //print("Combo: " + Combo);
+            coinSfx[Combo].Play();
 
             bonus += coinPts + Combo;
             lastCollectedCoin = coinIdx;

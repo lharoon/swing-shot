@@ -14,7 +14,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI menuText1, menuText2;
     public TextMeshProUGUI gameOverText, gameOverInstructionalText;
 
-    public AudioSource bgm;
+    public AudioSource bgm, startSound;
+
+    public Color CoinColour { get; private set; }
 
     private Vector2 borderSpawnPos = new Vector2(15, 0); // Initial door position
     private float borderSpacing = 8.0f;
@@ -52,12 +54,31 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        // TODO: Remove!
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            print("Deleting all local data!");
-            PlayerPrefs.DeleteAll();
-        }
+        // For testing
+        //if (Input.GetKeyDown(KeyCode.Backspace))
+        //{
+        //    print("Deleting all local data!");
+        //    PlayerPrefs.DeleteAll();
+        //}
+        //if (Input.GetKeyDown(KeyCode.S))
+        //    bgm.time = 25.0f;
+
+        if (!isRandomisingCoinColour)
+            StartCoroutine("RandomiseCoinColour");
+    }
+
+    private bool isRandomisingCoinColour;
+
+    private IEnumerator RandomiseCoinColour()
+    {
+        isRandomisingCoinColour = true;
+
+        float t = 1f;
+        var randomColour = Random.ColorHSV(0f, 1f, 1f, 1f, 1f, 1f);
+        DOTween.To(() => CoinColour, x => CoinColour = x, randomColour, t);
+        yield return new WaitForSeconds(t);
+
+        isRandomisingCoinColour = false;
     }
 
     private IEnumerator GameLoop()
@@ -134,6 +155,7 @@ public class GameManager : MonoBehaviour
         // Enable background effects & start music
         if (pattern != null) pattern.enabled = true;
         bgm.Play();
+        //startSound.Play();
 
         // TODO: Activate fire
 

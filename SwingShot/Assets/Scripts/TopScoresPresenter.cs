@@ -30,7 +30,6 @@ public class TopScoresPresenter : MonoBehaviour
         "topScore4"
     };
 
-
     private void Awake()
     {
         dl = dreamloLeaderBoard.GetSceneDreamloLeaderboard();

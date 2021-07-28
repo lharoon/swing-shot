@@ -6,7 +6,8 @@ public class LineColourAnimator : MonoBehaviour
 {
     private void Start()
     {
-        var targetColour = transform.GetComponentInParent<Shaper2D>().innerColor;
+        var pattern = GetComponentInParent<PatternManager>();
+        var targetColour = pattern.circleGraphic.innerColor;
         var endValue = targetColour;
         GetComponent<Image>().DOColor(endValue, 5.0f).SetLoops(2, LoopType.Yoyo);
     }

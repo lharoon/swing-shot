@@ -1,11 +1,16 @@
-﻿using UnityEngine;
-using DG.Tweening;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class CoinBehaviour : MonoBehaviour
 {
-    private ScoreUpdater scoreUpdater;
+    //public List<AudioSource> coinSfx;
 
-    private Color32 combo0Clr, combo1Clr, combo2Clr, combo3Clr;
+    private ScoreUpdater scoreUpdater;
+    private GameManager gm;
+    private SpriteRenderer sr;
+    private PatternManager pm;
+    private FlatFX coinVfx;
+    //private Transform coinSfx;
 
     private void Awake()
     {
@@ -14,34 +19,29 @@ public class CoinBehaviour : MonoBehaviour
         if (scoreUpdater == null)
             print("Could not find ScoreUpdater!");
 
-        combo0Clr = GameColours.white;
-        combo1Clr = new Color32(160, 217, 233, 255);
-        combo2Clr = new Color32(81, 189, 225, 255);
-        combo3Clr = GameColours.blue;
+        gm = FindObjectOfType<GameManager>();
+        sr = GetComponent<SpriteRenderer>();
+        pm = FindObjectOfType<PatternManager>();
+        coinVfx = GameObject.Find("CoinVFX").GetComponent<FlatFX>();
+        //foreach (Transform t in GameObject.Find("CoinSFX").transform)
+        //    coinSfx.Add(t.GetComponent<AudioSource>());
     }
 
     private void Update()
     {
-        //switch (scoreUpdater.Combo)
-        //{
-        //    case 0:
-        //        GetComponent<SpriteRenderer>().color = combo0Clr;
-        //        break;
-        //    case 1:
-        //        GetComponent<SpriteRenderer>().color = combo1Clr;
-        //        break;
-        //    case 2:
-        //        GetComponent<SpriteRenderer>().color = combo2Clr;
-        //        break;
-        //    case 3:
-        //        GetComponent<SpriteRenderer>().color = combo3Clr;
-        //        break;
-        //}
+        sr.color = gm.CoinColour;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
+        {
             Destroy(gameObject);
+            pm.SpawnBonusCircle();
+            coinVfx.settings[1].start.innerColor = sr.color;
+            coinVfx.settings[1].start.outerColor = sr.color;
+            coinVfx.AddEffect(transform.position, 1);
+            //coinSfx[scoreUpdater.Combo].Play();
+        }
     }
 }

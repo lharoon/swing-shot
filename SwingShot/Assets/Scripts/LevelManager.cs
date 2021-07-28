@@ -18,10 +18,6 @@ public class LevelManager : MonoBehaviour
     public Vector2 NextSpawnPos { get; set; } = default;
     public int GapAtEnd { get; } = 9;
 
-    // Defines range of door prefabs (allDoorPrefabs) to select from in stage
-    public int DoorFrom { get; set; }
-    public int DoorTo { get; set; }
-
     // Counters
     public int StageCount { get; set; } = 0;
     public int CoinCount { get; set; }
@@ -29,7 +25,6 @@ public class LevelManager : MonoBehaviour
 
     private int currentTargetIdx = 0;
     private Direction nextDir;
-    private readonly int doorRange = 4;
     private Transform playerTransform;
     private bool isLevelGenerated;
 
@@ -48,6 +43,7 @@ public class LevelManager : MonoBehaviour
     {
         NextSpawnPos = initialDoor.position;
 
+        // TODO: Spawn another 10 when near end…
         for (int i = 0; i < 10; i++)
             GenerateStage(NextSpawnPos);
 
@@ -56,12 +52,6 @@ public class LevelManager : MonoBehaviour
 
     public void GenerateStage(Vector2 spawnPos)
     {
-        if (StageCount < allDoorPrefabs.Count - doorRange)
-        {
-            DoorFrom = StageCount;
-            DoorTo = StageCount + doorRange + 1; // Last item is excluded from Range in StageManager
-        }
-
         // Add appropriate spacing between new stage & previous according to new direction
         if (StageCount != 0)
         {

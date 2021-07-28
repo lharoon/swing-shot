@@ -28,6 +28,13 @@ public class StageManager : MonoBehaviour
     private Quaternion minusFortyFive, zero, fortyFive, ninety, minusNinety;
     private Vector2 doorSpawnPos;
 
+    // For spawning debris
+    // 30% @ stage 0, 60% @ stage 10
+    const int minChance = 30, maxChance = 60, ramp = 3;
+
+    private int targetNumSecureDoors, actualNumSecureDoors = 0, probabilityIdx = 0;
+    private int numSegments;
+
     private void Awake()
     {
         minusFortyFive = Quaternion.Euler(new Vector3(0, 0, -45f));
@@ -43,7 +50,7 @@ public class StageManager : MonoBehaviour
 
     public void SpawnStageSegments()
     {
-        int numSegments = GetNumOfSegmentsInStage();
+        numSegments = GetNumOfSegmentsInStage();
 
         for (int j = 0; j < numSegments; j++)
         {
@@ -79,7 +86,11 @@ public class StageManager : MonoBehaviour
             bool isLast = j == numSegments - 1;
 
             // Instantiate random door
-            var selectedDoorIdx = Random.Range(lm.DoorFrom, lm.DoorTo);
+            //var selectedDoorIdx = lm.StageCount < lm.allDoorPrefabs.Count ? lm.StageCount : lm.allDoorPrefabs.Count - 1;
+            var selectedDoorIdx = Random.Range(0, lm.StageCount + 1);
+            if (selectedDoorIdx > lm.allDoorPrefabs.Count - 1)
+                selectedDoorIdx = lm.allDoorPrefabs.Count - 1;
+            //print("selectedDoorIdx: " + selectedDoorIdx);
             segment.DoorInfo = SpawnDoor(lm.allDoorPrefabs[selectedDoorIdx],
                 segment, rotation, isLast);
 
@@ -89,11 +100,11 @@ public class StageManager : MonoBehaviour
             SpawnCoin(segment);
 
             // Spawn debris
-            //if (Random.Range(0, 2) == 0)
+            //int r = Random.Range(0, 100);
+            //bool spawnDebris = lm.StageCount < 10 ? r < minChance + (ramp * lm.StageCount) : r < maxChance;
+            //if (spawnDebris) SpawnDebris(segment);
+            //if (Random.Range(0, 3) == 0)
             //    SpawnDebris(segment);
-            int r = Random.Range(0, 100);
-            bool spawnDebris = lm.StageCount < 6 ? r < 30 + (6 * lm.StageCount) : r < 60;
-            if (spawnDebris) SpawnDebris(segment);
 
             // Instantiate border with every door except last
             if (!isLast)
@@ -253,7 +264,24 @@ public class StageManager : MonoBehaviour
 
         door.gameObject.SetActive(ShouldSegmentBeActive(segment));
 
+        //if (actualNumSecureDoors < targetNumSecureDoors)
+        //    DetermineNumLocks(door);
+
         return door.GetComponent<DoorInfo>();
+    }
+
+    private void DetermineNumLocks(Transform door)
+    {
+        if (Random.Range(probabilityIdx, numSegments) == numSegments - 1)
+        {
+            door.GetComponent<DoorInfo>().NumLocks = 2;
+            door.GetComponent<DoorInfo>().ActivationLevel = Random.Range(1, 3);
+            actualNumSecureDoors++;
+        }
+        else
+        {
+            probabilityIdx++;
+        }
     }
 
     private void UpdateSpawnPos(float gap)
