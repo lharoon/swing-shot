@@ -4,8 +4,10 @@
 [Aa]ssets/AssetStoreTools*
 [Pp]lugins/
 [Bb]uild/
+[Bb]uilds/
 [Ll]ibrary/
 [Ll]ocal[Cc]ache/
+[Ll]ogs/
 [Oo]bj/
 [Tt]emp/
 [Uu]nityGenerated/

@@ -1,19 +1,44 @@
 ﻿<Properties StartupConfiguration="{D8FB89FE-B250-E378-A49E-0BB85B97E5F0}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerScripts/HookBehaviour.cs">
     <Files>
-      <File FileName="Assets/_RacingDemo/RacingDemoPlayerController.cs" Line="26" Column="48" />
-      <File FileName="Assets/_RacingDemo/RacingDemoTurretController.cs" Line="50" Column="32" />
-      <File FileName="Assets/Scripts/PlayerScripts/PlayerMovement.cs" Line="24" Column="6" />
-      <File FileName="Assets/Scripts/PlayerScripts/HookBehaviour.cs" Line="58" Column="37" />
-      <File FileName="Assets/Scripts/DoorScripts/TurretController.cs" Line="69" Column="6" />
-      <File FileName="Assets/Scripts/PlayerScripts/PlayerDeath.cs" Line="66" Column="1" />
-      <File FileName="Assets/_RacingDemo/RacingDemoManager.cs" Line="16" Column="50" />
-      <File FileName="Assets/_RacingDemo/RacingDemoHookBehaviour.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="149" Column="22" />
+      <File FileName="Assets/Scripts/LevelManager.cs" Line="56" Column="29" />
+      <File FileName="Assets/Scripts/StageManager.cs" Line="296" Column="16" />
+      <File FileName="Assets/Scripts/TargetAndStageIdxUpdater.cs" Line="9" Column="33" />
+      <File FileName="Assets/Scripts/DoorScripts/TurretController.cs" Line="74" Column="22" />
+      <File FileName="Assets/Scripts/PatternScripts/PatternManager.cs" Line="83" Column="17" />
+      <File FileName="Assets/Scripts/StageGenerator.cs" Line="17" Column="26" />
+      <File FileName="Assets/Scripts/PlayerScripts/HookBehaviour.cs" Line="27" Column="10" />
+      <File FileName="Assets/Scripts/PlayerScripts/PlayerMovement.cs" Line="27" Column="55" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="SwingShot" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="DoorScripts" expanded="True" />
+                <Node name="FireScripts" expanded="True" />
+                <Node name="PatternScripts" expanded="True" />
+                <Node name="PlayerScripts" expanded="True">
+                  <Node name="HookBehaviour.cs" selected="True" />
+                </Node>
+                <Node name="Utilities" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="Unity" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="2e6823d4-b18a-4e7d-afe4-eb82bc8880e1" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="daf39aa1-a7dd-4fb1-a4f7-2bee6198d4ed" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
